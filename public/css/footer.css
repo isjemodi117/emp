@@ -1,0 +1,129 @@
+/* PRIVACY PAGE */
+
+.privacy-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.privacy-card {
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    text-align:left;
+}
+
+.privacy-card h2 {
+    color:#2f7d32;
+    margin-bottom:15px;
+    font-size:20px;
+}
+
+.privacy-card p {
+    font-size:16px;
+    color:#555;
+    line-height:1.6;
+}
+
+/* TERMS PAGE */
+
+.terms-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.terms-card {
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    text-align:left;
+}
+
+.terms-card h2 {
+    color:#2f7d32;
+    margin-bottom:15px;
+    font-size:20px;
+}
+
+.terms-card p {
+    font-size:16px;
+    color:#555;
+    line-height:1.6;
+}
+
+/* CONTACT PAGE */
+
+.contact-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.contact-card {
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    text-align:center;
+}
+
+.contact-card h2 {
+    color:#2f7d32;
+    margin-bottom:15px;
+    font-size:20px;
+}
+
+.contact-card p, 
+.contact-card a {
+    font-size:16px;
+    color:#555;
+    text-decoration:none;
+}
+
+.contact-card a:hover {
+    text-decoration:underline;
+}
+
+/* Contact Form */
+.contact-form {
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    margin-top:10px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:15px;
+}
+
+.contact-form button {
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+    background:#2f7d32;
+    color:white;
+}
+
+.contact-form button:hover {
+    transform:translateY(-2px);
+    background:#256628;
+}
+.user-box a {
+    color: #256628;
+    font-weight:bold;
+    text-decoration:none;
+}
