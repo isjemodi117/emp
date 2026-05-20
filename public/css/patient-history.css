@@ -1,0 +1,86 @@
+/* ===== Algemene pagina stijl ===== */
+body {
+    background-color: #eaf4ea; /* zachte groene achtergrond */
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #2e5e2e;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+    background-color: #cfe8cf;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    color: #2e5e2e;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.navbar a {
+    color: #2e5e2e;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: 600;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* ===== Container ===== */
+.history-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.history-container h1 {
+    text-align: center;
+    color: #2e5e2e;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #4a7a4a;
+    margin-bottom: 30px;
+}
+
+/* ===== Visit Cards ===== */
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.history-card {
+    background: #f4faf4;
+    border: 1px solid #cfe3cf;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.history-card h3 {
+    color: #2e5e2e;
+    margin-bottom: 10px;
+}
+
+.history-card p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+/* ===== Strong labels ===== */
+.history-card strong {
+    color: #2e5e2e;
+}
