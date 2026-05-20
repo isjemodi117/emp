@@ -49,11 +49,19 @@
 }
 
 .emergency-card a {
-    color: white;
+    color:#2f7d32;
     font-weight:bold;
     text-decoration:none;
+
+    word-break: break-word;
 }
 
 .emergency-card a:hover {
     text-decoration:underline;
+}
+.call-btn{
+    color:white !important;
+}
+.admin_card{    
+    grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
 }
