@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Emergency Medical Portal</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/admin-panel.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">
+    <img src="../img/logo.png" alt="Logo" class="logo-img">
+    Emergency Medical Portal
+  </div>
+  <div class="user-box">
+    <a href="../index.html" class="btn">Home</a>
+    <a href="logout.html" class="btn">Logout</a>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Notificatiebox -->
+  <section class="notifications">
+    <h2>Nieuwe Aanmeldingen</h2>
+    <div class="notification-card">
+      <p><strong>Jan Jansen</strong> heeft zich aangemeld (jan@example.com)</p>
+      <select>
+        <option value="patient" selected>Patient</option>
+        <option value="hulpverlener">Hulpverlener</option>
+        <option value="doctor">Doctor</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button class="btn update">Rol toewijzen</button>
+    </div>
+    <div class="notification-card">
+      <p><strong>Lisa Pieters</strong> heeft zich aangemeld (lisa@example.com)</p>
+      <select>
+        <option value="patient" selected>Patient</option>
+        <option value="hulpverlener">Hulpverlener</option>
+        <option value="doctor">Doctor</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button class="btn update">Rol toewijzen</button>
+    </div>
+  </section>
+
+  <!-- Filterbox -->
+  <section class="filter-box">
+    <h2>Zoek & Filter</h2>
+    <table class="filter-table">
+      <thead>
+        <tr>
+          <th>Naam</th>
+          <th>Criteria</th>
+          <th>Waarde #1</th>
+          <th>Waarde #2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>User Name</td>
+          <td>
+            <select>
+              <option>all</option>
+              <option>equal</option>
+              <option>contains</option>
+            </select>
+          </td>
+          <td><input type="text" placeholder="Naam"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td>
+            <select>
+              <option>all</option>
+              <option>equal</option>
+              <option>contains</option>
+            </select>
+          </td>
+          <td><input type="text" placeholder="Email"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>User Role</td>
+          <td>
+            <select>
+              <option>all</option>
+              <option>equal</option>
+            </select>
+          </td>
+          <td>
+            <select>
+              <option>patient</option>
+              <option>hulpverlener</option>
+              <option>doctor</option>
+              <option>admin</option>
+            </select>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Visit Date</td>
+          <td>
+            <select>
+              <option>all</option>
+              <option>equal</option>
+              <option>between</option>
+            </select>
+          </td>
+          <td><input type="date"></td>
+          <td><input type="date"></td>
+        </tr>
+        <tr>
+          <td>Logs</td>
+          <td>
+            <select>
+              <option>all</option>
+              <option>equal</option>
+              <option>contains</option>
+            </select>
+          </td>
+          <td><input type="text" placeholder="Zoek in logs"></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn search">Zoek</button>
+  </section>
+
+  <!-- Resultaten -->
+  <section class="results">
+    <h2>Resultaten</h2>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Naam</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Extra Info</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamisch gevuld -->
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>© 2026 Emergency Medical Portal | 
+     <a href="privacy.html">Privacy Policy</a> | 
+     <a href="terms.html">Terms</a> | 
+     <a href="contact.html">Contact Admin</a>
+  </p>
+</footer>
+
+</body>
+</html>

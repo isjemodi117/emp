@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visit Registratie | EHBO App</title>
+    <link rel="stylesheet" href="css/new_visits.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <h2 class="logo">EHBO Patiënt Identifier</h2>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="patient_list.html">Patiënten</a>
+            <a href="new_visits.html" class="active">Visits</a>
+            <a href="../auth/login.html" class="logout">Logout</a>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <section class="form-container">
+        <h1>Nieuwe Visit Registreren</h1>
+        <p class="subtitle">Vul alle gegevens zorgvuldig in</p>
+
+        <form class="visit-form">
+
+            <!-- BASISINFO -->
+            <label>Patiënt ID</label>
+            <input type="text" placeholder="Bijv. 10293">
+
+            <label>Datum</label>
+            <input type="date">
+
+            <label>Tijd</label>
+            <input type="time">
+
+            <label>Locatie van incident</label>
+            <input type="text" placeholder="Bijv. Tammenga, Paramaribo">
+
+            <label>Symptomen</label>
+            <textarea placeholder="Beschrijf de symptomen..."></textarea>
+
+            <label>Wat is er gebeurd?</label>
+            <textarea placeholder="Korte beschrijving van het incident..."></textarea>
+
+            <!-- BEHANDELING -->
+            <h3 class="section-title">Treatment Given</h3>
+            <textarea placeholder="Treatment details..."></textarea>
+
+            <h3 class="section-title">Medicine Prescribed</h3>
+            <textarea placeholder="Medicine name, dosage and instructions..."></textarea>
+
+            <h3 class="section-title">Doctor Notes</h3>
+            <textarea placeholder="Additional notes..."></textarea>
+
+            <!-- NOODINFO -->
+            <div class="critical-section">
+                <h3>Critical Emergency Information</h3>
+                <p class="critical-subtitle">Alleen invullen bij ernstige situaties</p>
+
+                <div class="critical-grid">
+                    <div>
+                        <label>Ambulance Used?</label>
+                        <select>
+                            <option>No</option>
+                            <option>Yes</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Emergency Level</label>
+                        <select>
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                            <option>Critical</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUBMIT -->
+            <button type="submit" class="btn">Visit Opslaan</button>
+
+        </form>
+    </section>
+
+</body>
+</html>

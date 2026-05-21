@@ -1,0 +1,136 @@
+/* ===== Algemene pagina stijl ===== */
+body {
+    background-color: #eaf4ea; /* zachte groene achtergrond */
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #2e5e2e;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+    background-color: #cfe8cf;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    color: #2e5e2e;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.navbar a {
+    color: #2e5e2e;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: 600;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* ===== Container ===== */
+.form-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.form-container h1 {
+    text-align: center;
+    color: #2e5e2e;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #4a7a4a;
+    margin-bottom: 30px;
+}
+
+/* ===== Formulier ===== */
+.visit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.visit-form label {
+    font-weight: bold;
+    color: #2e5e2e;
+}
+
+.visit-form input,
+.visit-form textarea,
+.visit-form select {
+    padding: 12px;
+    border: 1px solid #cfe3cf;
+    border-radius: 6px;
+    font-size: 15px;
+    background: #f8fdf8;
+}
+
+.visit-form textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+/* ===== Sectietitels ===== */
+.section-title {
+    margin-top: 25px;
+    color: #2e5e2e;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* ===== Critical Section ===== */
+.critical-section {
+    margin-top: 30px;
+    padding: 20px;
+    border-left: 4px solid #c0392b;
+    background: #fff5f5;
+    border-radius: 8px;
+}
+
+.critical-section h3 {
+    color: #c0392b;
+    margin-bottom: 5px;
+}
+
+.critical-subtitle {
+    color: #a94442;
+    margin-bottom: 15px;
+}
+
+.critical-grid {
+    display: flex;
+    gap: 20px;
+}
+
+.critical-grid select {
+    background: #fff;
+}
+
+/* ===== Submit Button ===== */
+.btn {
+    background-color: #2e5e2e;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: #3c7a3c;
+}
+
