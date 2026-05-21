@@ -1,73 +1,115 @@
 <!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patiëntprofiel | EHBO App</title>
-    <link rel="stylesheet" href="css/patient_profile.css">
-</head>
+<html lang="en">
+
+{{head}}
 
 <body>
 
-    <!-- NAVBAR -->
-    <header class="navbar">
-        <h2 class="logo">EHBO Patiënt Identifier</h2>
-        <nav>
-            <a href="../index.html">Home</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="patients.html">Patiënten</a>
-            <a href="visits.html">Visits</a>
-            <a href="../auth/login.html" class="logout">Logout</a>
-        </nav>
-    </header>
+{{header}}
 
-    <!-- MAIN CONTENT -->
-    <section class="profile-container">
+<section class="my-profile-container">
 
-        <h1>Patiëntprofiel</h1>
-        <p class="subtitle">Overzicht van persoonlijke en medische gegevens</p>
+    <!-- PROFILE HEADER -->
+    <div class="my-profile-header">
 
-        <div class="profile-grid">
+        <img src="/img/user.jpg" alt="My Photo" class="my-profile-img">
 
-            <!-- BASISGEGEVENS -->
-            <div class="profile-card">
-                <h3>Basisgegevens</h3>
-                <p><strong>Naam:</strong> Alucha Kemble</p>
-                <p><strong>Geboortedatum:</strong> 26-12-2006</p>
-                <p><strong>Geslacht:</strong> Vrouw</p>
-                <p><strong>SZF‑nummer:</strong> SZF123456</p>
-                <p><strong>Telefoon:</strong> +597 888888</p>
-                <p><strong>Adres:</strong> Paramaribo, Suriname</p>
-            </div>
+        <div class="my-profile-info">
 
-            <!-- MEDISCHE INFO -->
-            <div class="profile-card">
-                <h3>Medische Informatie</h3>
-                <p><strong>Bloedgroep:</strong> O+</p>
-                <p><strong>Allergieën:</strong> Penicilline</p>
-                <p><strong>Medicatie:</strong> Ibuprofen 400mg</p>
-                <p><strong>Aandoeningen:</strong> Astma</p>
-                <p><strong>Laatste bezoek:</strong> 05-05-2026</p>
-            </div>
+            <h1>Marvin Latchmansing</h1>
 
-            <!-- NOODCONTACT -->
-            <div class="profile-card">
-                <h3>Noodcontact</h3>
-                <p><strong>Naam:</strong> Mariska Kemble</p>
-                <p><strong>Relatie:</strong> Moeder</p>
-                <p><strong>Telefoon:</strong> +597 777777</p>
-            </div>
+            <p class="role">ICT Functioneel Beheerder</p>
 
-            <!-- PATIËNT ID -->
-            <div class="profile-card">
-                <h3>Patiënt Identificatie</h3>
-                <p><strong>Patiënt ID:</strong> 10293</p>
-                <a href="patient-history.html" class="btn">Bekijk medische geschiedenis</a>
+            <div class="status active">
+                Online / Actief
             </div>
 
         </div>
 
-    </section>
+    </div>
+
+    <!-- GRID -->
+    <div class="my-profile-grid">
+
+        <!-- PERSONAL INFO -->
+        <div class="card">
+            <h2>Persoonlijke Gegevens</h2>
+
+            <p><strong>Naam:</strong> Marvin Latchmansing</p>
+            <p><strong>Email:</strong> marvin@email.com</p>
+            <p><strong>Telefoon:</strong> +597 7273468</p>
+            <p><strong>Adres:</strong> Paramaribo, Suriname</p>
+        </div>
+
+        <!-- WORK INFO -->
+        <div class="card">
+            <h2>Werk Informatie</h2>
+
+            <p><strong>Rol:</strong> Admin / ICT</p>
+            <p><strong>Afdeling:</strong> IT & Systemen</p>
+            <p><strong>Werknemer ID:</strong> EMP-001</p>
+            <p><strong>Status:</strong> Actief</p>
+        </div>
+
+        <!-- SECURITY / ACCESS -->
+        <div class="card">
+            <h2>Toegang & Rollen</h2>
+
+            <div class="tags">
+                <span class="tag">admin</span>
+                <span class="tag">doctor</span>
+                <span class="tag">system</span>
+            </div>
+
+            <p class="note">
+                Deze rollen bepalen welke pagina’s je kunt openen.
+            </p>
+        </div>
+
+        <!-- MEDICATION (IF ANY) -->
+        <div class="card">
+
+            <h2>Mijn Medicatie</h2>
+
+            <div class="medication-list">
+
+                <div class="med-item">
+                    <h4>Ibuprofen 400mg</h4>
+                    <p>Gebruik: Indien nodig tegen pijn</p>
+                </div>
+
+                <div class="med-item">
+                    <h4>Vitamine D</h4>
+                    <p>Gebruik: 1x per dag</p>
+                </div>
+
+            </div>
+
+            <p class="note">
+                Alleen zichtbaar voor jezelf (privacy protected data).
+            </p>
+
+        </div>
+
+        <!-- ACTIVITY -->
+        <div class="card">
+
+            <h2>Recente Activiteit</h2>
+
+            <ul class="activity">
+                <li>✔ Ingelogd om 08:12</li>
+                <li>✔ Patient database bekeken</li>
+                <li>✔ Visit record aangepast</li>
+                <li>✔ Logout test uitgevoerd</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+{{footer}}
 
 </body>
 </html>

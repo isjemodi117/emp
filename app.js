@@ -40,17 +40,49 @@ function generateNavbar(user) {
         </div>
 
         <nav>
+        
+            <a href="scan">Scan</a>
+            <a href="visits">Visits</a>
     `;
     
        // ROLE BASED LINKS
     if (user.permissions.includes("dashboard")) {
-        nav += `<a href="/dashboard">Dashboard</a>`;
+        nav += `<a href="/patients">Patiënten</a>`;
     }
     if (user.permissions.includes("doctors")) {
         nav += `<a href="/patients">Doctors</a>`;
     }
 
-    nav += `<a href="/logout" class="logout">Logout</a>`;
+    nav += `
+    <div class="user-dropdown">
+
+    <div class="user-trigger">
+
+        <img src="/img/user.jpg" alt="User" class="nav-user-img">
+
+        <span class="nav-username">
+            Rajesh
+        </span>
+
+    </div>
+
+    <div class="dropdown-menu">
+
+        <a href="/profile">
+            Mijn Profiel
+        </a>
+
+        <a href="/settings">
+            Instellingen
+        </a>
+
+        <a href="/logout" class="logout-link">
+            Logout
+        </a>
+
+    </div>
+
+</div>`;
 
     nav += `
         </nav>
@@ -94,7 +126,15 @@ function render(filePath, options = {}) {
 /* =========================
    ROUTES
 ========================= */
-app.get("/", (req, res) => res.send(render("index.html")));
+app.get("/", (req, res) => {
+    if (!currentUser.loggedIn) {
+        return res.send(render("index.html"));
+    }
+    return res.send(render("pages/dashboard.html",{
+        css: `<link rel="stylesheet" href="css/profile.css">`
+    }));
+
+});
 
 app.get("/about", (req, res) => {
     res.send(render("pages/about.html", {
@@ -123,6 +163,11 @@ app.get("/policy", (req, res) => {
 });
 
 
+app.get("/history", requireAdmin, (req, res) => {
+    res.send(render("pages/history.html",{
+        css: `<link rel="stylesheet" href="css/history.css">`
+    }));
+});
 
 
 
@@ -141,20 +186,29 @@ app.get("/dashboard", requireAdmin, (req, res) => {
 });
 
 app.get("/patients", requireAdmin, (req, res) => {
-    res.send(render("pages/patients.html"));
+    res.send(render("pages/patients.html",{
+        css: `<link rel="stylesheet" href="css/patients.css">`
+    }));
+});
+
+app.get("/scan", requireAdmin, (req, res) => {
+    res.send(render("pages/scan.html",{
+        css: `<link rel="stylesheet" href="css/scan.css">`
+    }));
 });
 
 app.get("/visits", requireAdmin, (req, res) => {
-    res.send(render("pages/visits.html"));
+    res.send(render("pages/visits.html",{
+        css: `<link rel="stylesheet" href="css/visits.css">`
+    }));
 });
 
 app.get("/profile", requireAdmin, (req, res) => {
-    res.send(render("pages/profile.html"));
+    res.send(render("pages/profile.html",{
+        css: `<link rel="stylesheet" href="css/profile.css">`
+    }));
 });
 
-app.get("/history", requireAdmin, (req, res) => {
-    res.send(render("pages/history.html"));
-});
 
 /* =========================
    START SERVER

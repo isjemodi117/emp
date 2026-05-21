@@ -5,20 +5,7 @@
 
 <body>
 
-    <!-- NAVBAR -->
-    <header class="navbar">
-        <div class="logo">
-        <a href="/"><img href="/" src="img/logo.png" alt="Logo" class="logo-img"> </a>
-        Emergency Medical Portal
-        </div>
-        <nav>
-            <a href="../index.html">Home</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="patients.html">Patiënten</a>
-            <a href="visits.html">Visits</a>
-            <a href="../auth/login.html" class="logout">Logout</a>
-        </nav>
-    </header>
+    {{header}}
 
    <!-- PATIENT PROFILE -->
     <div class="patient-profile">
@@ -89,31 +76,141 @@
     <p class="subtitle">Alle EHBO-bezoeken van deze patiënt</p>
 
     <!-- HISTORY LIST -->
-    <div class="history-list">
+  <!-- HISTORY LIST -->
+<div class="history-list">
 
-        <div class="history-card">
-            <h3>Visit op 05-05-2026</h3>
-            <p><strong>Tijd:</strong> 14:32</p>
-            <p><strong>Hulpverlener:</strong> Kevin J.</p>
-            <p><strong>Locatie:</strong> Tammenga</p>
-            <p><strong>Symptomen:</strong> Benauwdheid, hoesten</p>
-            <p><strong>Handelingen:</strong> Inhaler toegediend</p>
-            <p><strong>Medicatie:</strong> Salbutamol</p>
-            <p><strong>Notities:</strong> Patiënt reageerde goed op behandeling</p>
+    <!-- VISIT -->
+    <div class="history-card emergency">
+
+        <div class="history-top">
+            <h3>EHBO Bezoek</h3>
+            <span class="history-date">
+                05-05-2026 | 14:32
+            </span>
         </div>
 
-        <div class="history-card">
-            <h3>Visit op 12-03-2026</h3>
-            <p><strong>Tijd:</strong> 09:10</p>
-            <p><strong>Hulpverlener:</strong> Maria S.</p>
-            <p><strong>Locatie:</strong> Centrum</p>
-            <p><strong>Symptomen:</strong> Flauwvallen</p>
-            <p><strong>Handelingen:</strong> Suikerwater gegeven</p>
-            <p><strong>Medicatie:</strong> Geen</p>
-            <p><strong>Notities:</strong> Patiënt herstelde binnen 5 minuten</p>
+        <div class="history-content">
+
+            <p><strong>Hulpverlener:</strong> Kevin J.</p>
+
+            <p><strong>Locatie:</strong> Tammenga EHBO Post</p>
+
+            <p><strong>Klacht:</strong> Benauwdheid & ernstige hoest</p>
+
+            <p><strong>Vitale waarden:</strong></p>
+
+            <ul>
+                <li>Hartslag: 110 bpm</li>
+                <li>Zuurstof: 91%</li>
+                <li>Temperatuur: 37.8°C</li>
+            </ul>
+
+            <p><strong>Behandeling:</strong></p>
+
+            <ul>
+                <li>Salbutamol inhaler toegediend</li>
+                <li>Zuurstof ondersteuning</li>
+            </ul>
+
+            <p><strong>Medicatie:</strong></p>
+
+            <div class="tag-list">
+                <span class="tag">Salbutamol</span>
+                <span class="tag">Prednison</span>
+            </div>
+
+            <p><strong>Notities:</strong></p>
+
+            <p class="notes">
+                Patiënt reageerde goed op behandeling.
+                Ademhaling stabiel na 15 minuten observatie.
+            </p>
+
         </div>
 
     </div>
+
+    <!-- DOCTOR VISIT -->
+    <div class="history-card doctor">
+
+        <div class="history-top">
+            <h3>Doktersbezoek</h3>
+
+            <span class="history-date">
+                12-03-2026 | 09:10
+            </span>
+        </div>
+
+        <div class="history-content">
+
+            <p><strong>Arts:</strong> Dr. Maria S.</p>
+
+            <p><strong>Kliniek:</strong> Academisch Ziekenhuis</p>
+
+            <p><strong>Reden:</strong> Flauwvallen</p>
+
+            <p><strong>Diagnose:</strong></p>
+
+            <div class="tag-list">
+                <span class="tag warning">
+                    Lage bloedsuiker
+                </span>
+            </div>
+
+            <p><strong>Voorgeschreven medicatie:</strong></p>
+
+            <div class="tag-list">
+                <span class="tag">
+                    Glucose supplement
+                </span>
+            </div>
+
+            <p><strong>Advies:</strong></p>
+
+            <ul>
+                <li>Meer water drinken</li>
+                <li>Regelmatig eten</li>
+                <li>Controle over 2 weken</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- MEDICATION HISTORY -->
+    <div class="history-card medication">
+
+        <div class="history-top">
+            <h3>Medicatie Geschiedenis</h3>
+
+            <span class="history-date">
+                Actief
+            </span>
+        </div>
+
+        <div class="history-content">
+
+            <div class="tag-list">
+
+                <span class="tag">
+                    Ibuprofen 400mg
+                </span>
+
+                <span class="tag">
+                    Salbutamol Inhaler
+                </span>
+
+                <span class="tag">
+                    Vitamine D
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 </section>
 
