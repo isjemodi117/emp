@@ -1,34 +1,9 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-const mysql = require("mysql2");
-const dotenv = require("dotenv");
 
-dotenv.config();
-
-/* =========================
-   DATABASE CONNECTIE
-========================= */
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password:"aluchacode-2006" // verander als jouw wachtwoord anders is
-    database: "medical_portal"      // verander als jouw database anders heet
-});
-
-db.connect((err) => {
-    if (err) {
-        console.error("Database fout:", err);
-    } else {
-        console.log("Verbonden met MySQL database.");
-    }
-});
-
-/* =========================
-   EXPRESS APP
-========================= */
 const app = express();
-app.use(express.json());
+
 app.use(express.static(path.join(__dirname, "public")));
 
 /* =========================
@@ -54,9 +29,9 @@ function generateNavbar(user) {
     if (!user.loggedIn) {
         return load("partials/header.html") + load("partials/nav.html");
     }
-
     let nav = `
     <header class="navbar">
+
         <div class="logo">
             <a href="/">
                 <img src="/img/logo.png" class="logo-img">
@@ -65,10 +40,12 @@ function generateNavbar(user) {
         </div>
 
         <nav>
+        
             <a href="scan">Scan</a>
             <a href="visits">Visits</a>
     `;
-
+    
+       // ROLE BASED LINKS
     if (user.permissions.includes("dashboard")) {
         nav += `<a href="/patients">Patiënten</a>`;
     }
@@ -77,18 +54,37 @@ function generateNavbar(user) {
     }
 
     nav += `
-        <div class="user-dropdown">
-            <div class="user-trigger">
-                <img src="/img/user.jpg" alt="User" class="nav-user-img">
-                <span class="nav-username">Rajesh</span>
-            </div>
+    <div class="user-dropdown">
 
-            <div class="dropdown-menu">
-                <a href="/profile">Mijn Profiel</a>
-                <a href="/settings">Instellingen</a>
-                <a href="/logout" class="logout-link">Logout</a>
-            </div>
-        </div>
+    <div class="user-trigger">
+
+        <img src="/img/user.jpg" alt="User" class="nav-user-img">
+
+        <span class="nav-username">
+            Rajesh
+        </span>
+
+    </div>
+
+    <div class="dropdown-menu">
+
+        <a href="/profile">
+            Mijn Profiel
+        </a>
+
+        <a href="/settings">
+            Instellingen
+        </a>
+
+        <a href="/logout" class="logout-link">
+            Logout
+        </a>
+
+    </div>
+
+</div>`;
+
+    nav += `
         </nav>
     </header>
     `;
@@ -96,11 +92,18 @@ function generateNavbar(user) {
     return nav;
 }
 
+
+
+
+
+
 /* =========================
    RENDER ENGINE
 ========================= */
 function render(filePath, options = {}) {
+
     let html = load(filePath);
+
     let head = load("partials/head.html");
 
     head = head.replaceAll("{{title}}", options.title || "EMP");
@@ -114,26 +117,23 @@ function render(filePath, options = {}) {
     return html;
 }
 
-/* =========================
-   PROTECTED ROUTES
-========================= */
-function requireAdmin(req, res, next) {
-    if (!currentUser.roles.includes("admin")) {
-        return res.status(403).send("Access denied");
-    }
-    next();
-}
+
+
+
+
+
 
 /* =========================
-   FRONTEND ROUTES
+   ROUTES
 ========================= */
 app.get("/", (req, res) => {
     if (!currentUser.loggedIn) {
         return res.send(render("index.html"));
     }
-    return res.send(render("pages/dashboard.html", {
+    return res.send(render("pages/dashboard.html",{
         css: `<link rel="stylesheet" href="css/profile.css">`
     }));
+
 });
 
 app.get("/about", (req, res) => {
@@ -162,71 +162,57 @@ app.get("/policy", (req, res) => {
     res.send(render("pages/policy.html"));
 });
 
+
 app.get("/history", requireAdmin, (req, res) => {
-    res.send(render("pages/history.html", {
+    res.send(render("pages/history.html",{
         css: `<link rel="stylesheet" href="css/history.css">`
     }));
 });
+
+
+
+
+
+/* 🔥 FIXED PROTECTED ROUTES */
+function requireAdmin(req, res, next) {
+    if (!currentUser.roles.includes("admin")) {
+        return res.status(403).send("Access denied");
+    }
+    next();
+}
 
 app.get("/dashboard", requireAdmin, (req, res) => {
     res.send(render("pages/dashboard.html"));
 });
 
 app.get("/patients", requireAdmin, (req, res) => {
-    res.send(render("pages/patients.html", {
+    res.send(render("pages/patients.html",{
         css: `<link rel="stylesheet" href="css/patients.css">`
     }));
 });
 
 app.get("/scan", requireAdmin, (req, res) => {
-    res.send(render("pages/scan.html", {
+    res.send(render("pages/scan.html",{
         css: `<link rel="stylesheet" href="css/scan.css">`
     }));
 });
 
 app.get("/visits", requireAdmin, (req, res) => {
-    res.send(render("pages/visits.html", {
+    res.send(render("pages/visits.html",{
         css: `<link rel="stylesheet" href="css/visits.css">`
     }));
 });
 
 app.get("/profile", requireAdmin, (req, res) => {
-    res.send(render("pages/profile.html", {
+    res.send(render("pages/profile.html",{
         css: `<link rel="stylesheet" href="css/profile.css">`
     }));
 });
 
-/* =========================
-   API ROUTES (BACKEND)
-========================= */
-
-// Test database
-app.get("/api/testdb", (req, res) => {
-    db.query("SELECT 1 + 1 AS result", (err, results) => {
-        if (err) return res.status(500).json({ error: "Database niet bereikbaar" });
-        res.json({ message: "Database werkt!", result: results[0].result });
-    });
-});
-
-// Haal alle patiënten op
-app.get("/api/patients", (req, res) => {
-    db.query("SELECT * FROM patients", (err, results) => {
-        if (err) return res.status(500).json({ error: err });
-        res.json(results);
-    });
-});
-
-// Tel aantal patiënten
-app.get("/api/patient-count", (req, res) => {
-    db.query("SELECT COUNT(*) AS total FROM patients", (err, results) => {
-        if (err) return res.status(500).json({ error: err });
-        res.json(results[0]);
-    });
-});
 
 /* =========================
    START SERVER
 ========================= */
-app.listen(3000, () => {
+app.listen(3000, "0.0.0.0", () => {
     console.log("Server running on http://localhost:3000");
 });
