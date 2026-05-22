@@ -7,24 +7,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 /* =========================
-   DATABASE CONNECTIE
-========================= */
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password:"aluchacode-2006" // verander als jouw wachtwoord anders is
-    database: "medical_portal"      // verander als jouw database anders heet
-});
-
-db.connect((err) => {
-    if (err) {
-        console.error("Database fout:", err);
-    } else {
-        console.log("Verbonden met MySQL database.");
-    }
-});
-
-/* =========================
    EXPRESS APP
 ========================= */
 const app = express();
@@ -35,7 +17,7 @@ app.use(express.static(path.join(__dirname, "public")));
    DUMMY USER
 ========================= */
 const currentUser = {
-    loggedIn: true,
+    loggedIn: false,
     roles: ["admin", "doctor"],
     permissions: ["dashboard", "patients", "visits"]
 };
@@ -160,6 +142,14 @@ app.get("/signup", (req, res) => {
 
 app.get("/policy", (req, res) => {
     res.send(render("pages/policy.html"));
+});
+
+app.get("/contact", (req, res) => {
+    res.send(render("pages/contact.html"));
+});
+
+app.get("/terms", (req, res) => {
+    res.send(render("pages/terms.html"));
 });
 
 app.get("/history", requireAdmin, (req, res) => {
