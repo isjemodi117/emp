@@ -7,6 +7,24 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 /* =========================
+   DATABASE CONNECTIE
+========================= */
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password:"aluchacode-2006" // verander als jouw wachtwoord anders is
+    database: "medical_portal"      // verander als jouw database anders heet
+});
+
+db.connect((err) => {
+    if (err) {
+        console.error("Database fout:", err);
+    } else {
+        console.log("Verbonden met MySQL database.");
+    }
+});
+
+/* =========================
    EXPRESS APP
 ========================= */
 const app = express();
