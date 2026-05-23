@@ -11,24 +11,39 @@
 
     <!-- MAIN CONTENT -->
     <main class="container">
-        <section class="title-card">
-            <h1>Sign Up</h1>
-            <p>Maak een nieuw account aan om gebruik te maken van het portaal.</p>
-        </section>
+  <section class="auth-card">
+    <h1>Account Aanmaken</h1>
+    <form id="signupForm" method="POST" action="/signup">
+      <div class="form-group">
+        <label for="name">Naam</label>
+        <input type="text" id="name" name="name" placeholder="Voor- en achternaam" required>
+      </div>
 
-        <form class="form-box">
-            <label>Naam</label>
-            <input type="text" placeholder="Voer je naam in" required>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="jouw@email.com" required>
+      </div>
 
-            <label>Email</label>
-            <input type="email" placeholder="Voer je email in" required>
+      <div class="form-group">
+        <label for="password">Wachtwoord</label>
+        <input type="password" id="password" name="password" placeholder="********" required>
+      </div>
 
-            <label>Wachtwoord</label>
-            <input type="password" placeholder="Maak een wachtwoord" required>
+      <div class="form-group">
+        <label for="dob">Geboortedatum</label>
+        <input type="date" id="dob" name="dob">
+      </div>
 
-            <button type="submit" class="btn signup">Sign Up</button>
-        </form>
-    </main>
+      <div class="form-group">
+        <label for="phone">Telefoonnummer</label>
+        <input type="text" id="phone" name="phone" placeholder="+597 5551234">
+      </div>
+
+      <button type="submit" class="btn">Sign Up</button>
+    </form>
+    <p>Heb je al een account? <a href="login.html">Log in</a></p>
+  </section>
+</main>
 
     {{footer}}
 
