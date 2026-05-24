@@ -1,15 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../config/db");
-
-// 🔐 Session-based admin beveiliging
-const { requireAdmin } = require("../middlewares/authMiddleware");
+const db = require("../sql/config");
 
 
 // =========================
 // GET PATIENT BY ID
 // =========================
-router.get("/patient/:id", requireAdmin, (req, res) => {
+router.get("/patient/:id", (req, res) => {
 
     const idNumber = req.params.id;
 
@@ -44,7 +41,7 @@ router.get("/patient/:id", requireAdmin, (req, res) => {
 // =========================
 // GET ALL PATIENTS
 // =========================
-router.get("/patients", requireAdmin, (req, res) => {
+router.get("/patients", (req, res) => {
 
     db.query("SELECT * FROM patients", (err, results) => {
 
@@ -62,7 +59,7 @@ router.get("/patients", requireAdmin, (req, res) => {
 // =========================
 // PATIENT COUNT
 // =========================
-router.get("/patient-count", requireAdmin, (req, res) => {
+router.get("/patient-count", (req, res) => {
 
     db.query(
         "SELECT COUNT(*) AS total FROM patients",
@@ -83,7 +80,7 @@ router.get("/patient-count", requireAdmin, (req, res) => {
 // =========================
 // ADD NEW PATIENT (CREATE)
 // =========================
-router.post("/patients", requireAdmin, (req, res) => {
+router.post("/patients", (req, res) => {
 
     const { id_number, name, birthdate, bloodtype } = req.body;
 
@@ -114,7 +111,7 @@ router.post("/patients", requireAdmin, (req, res) => {
 // =========================
 // UPDATE PATIENT (UPDATE)
 // =========================
-router.put("/patient/:id", requireAdmin, (req, res) => {
+router.put("/patient/:id", (req, res) => {
 
     const { name, birthdate, bloodtype } = req.body;
 
@@ -146,7 +143,7 @@ router.put("/patient/:id", requireAdmin, (req, res) => {
 // =========================
 // DELETE PATIENT (DELETE)
 // =========================
-router.delete("/patient/:id", requireAdmin, (req, res) => {
+router.delete("/patient/:id", (req, res) => {
 
     const sql = "DELETE FROM patients WHERE id_number = ?";
 

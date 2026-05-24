@@ -12,8 +12,6 @@ const apiRoutes = require("./routes/apiRoutes");
 const pageRoutes = require("./routes/pageRoutes");
 const authRoutes = require("./routes/authRoutes");
 const patientRoutes = require("./routes/patientRoutes");
-const adminRoutes = require("./routes/patientRoutes");
-const db = require("./config/db");
 
 // MIDDLEWARE
 app.use(cors());
@@ -26,7 +24,8 @@ app.use(session({
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        secure: false
+        secure: false,
+        maxAge: 1000 * 60 * 60  // 1 HOUR
     }
 }));
 
@@ -35,11 +34,6 @@ app.use(session({
 app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
 app.use("/api", apiRoutes);
-app.use("/api", patientRoutes);
-app.use("/api", adminRoutes);
-
-
-
 
 // 404
 app.use((req, res) => {
@@ -50,41 +44,9 @@ app.use((req, res) => {
 
 });
 
-app.post('/patients', (req, res) => {
-    const { naam, email } = req.body;
-
-    if (!naam || !email) {
-        return res.status(400).json({
-            succes: false,
-            message: 'Naam en email zijn verplicht'
-        });
-    }
-
-    db.query(
-        "INSERT INTO patients (naam, email) VALUES (?, ?)",
-        [naam, email],
-        (err, results) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).json({
-                    succes: false,
-                    message: 'Database error'
-                });
-            }
-
-            res.json({
-                succes: true,
-                message: 'Patient ontvangen',
-                id: results.insertId
-            });
-        }
-    );
-});
-
 // START SERVER
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
+app.listen(3000, () => {
 
-    console.log(`Server running on http://localhost:${port}`);
+    console.log("Server running on http://localhost:3000");
 
 });
