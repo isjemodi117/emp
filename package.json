@@ -21,9 +21,11 @@
   },
   "homepage": "https://github.com/isjemodi117/emp#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-session": "^1.17.3",
     "fs": "^0.0.1-security",
     "multer": "^2.1.1",
     "mysql2": "^3.22.3"
