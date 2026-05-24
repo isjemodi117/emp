@@ -11,6 +11,7 @@ const app = express();
 const apiRoutes = require("./routes/apiRoutes");
 const pageRoutes = require("./routes/pageRoutes");
 const authRoutes = require("./routes/authRoutes");
+const patientRoutes = require("./routes/patientRoutes");
 
 // MIDDLEWARE
 app.use(cors());
