@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const { currentUser } = require("../middlewares/authMiddleware");
+const { requireLogin, currentUser } = require("../middlewares/authMiddleware");
 
 function load(filePath) {
 
@@ -12,81 +12,63 @@ function load(filePath) {
 
 }
 
-function generateNavbar(user) {
+function generateNavbar(user = {}) {
+
+    const permissions = user.permissions || [];
+    const roles = user.roles || [];
 
     if (!user.loggedIn) {
-
-        return load("partials/header.html") +
-               load("partials/nav.html");
-
+        return `
+        <header class="navbar">
+            <div class="logo">
+                <a href="/"><img src="/img/logo.png" class="logo-img"></a>
+                EMP
+            </div>
+            <nav>
+                <a href="/login">Login</a>
+            </nav>
+        </header>
+        `;
     }
 
     let nav = `
     <header class="navbar">
 
         <div class="logo">
-
-            <a href="/">
-                <img src="/img/logo.png" class="logo-img">
-            </a>
-
+            <a href="/"><img src="/img/logo.png" class="logo-img"></a>
             EMP
-
         </div>
 
         <nav>
-
             <a href="/scan">Scan</a>
             <a href="/visits">Visits</a>
     `;
 
-    if (user.permissions.includes("dashboard")) {
-
+    if (permissions.includes("dashboard")) {
         nav += `<a href="/patients">Patiënten</a>`;
-
     }
 
-    if (user.permissions.includes("doctors")) {
-
-        nav += `<a href="/patients">Doctors</a>`;
-
+    if (permissions.includes("doctors")) {
+        nav += `<a href="/doctors">Doctors</a>`;
     }
 
     nav += `
         <div class="user-dropdown">
-
             <div class="user-trigger">
-
-                <img src="/img/user.jpg"
-                     class="nav-user-img">
-
+                <img src="/img/user.jpg" class="nav-user-img">
                 <span class="nav-username">
-                    Rajesh
+                    ${user.email || "User"}
                 </span>
-
             </div>
 
             <div class="dropdown-menu">
-
-                <a href="/profile">
-                    Mijn Profiel
-                </a>
-
-                <a href="/settings">
-                    Instellingen
-                </a>
-
-                <a href="/logout"
-                   class="logout-link">
-                   Logout
-                </a>
-
+                <a href="/profile">Mijn Profiel</a>
+                <a href="/settings">Instellingen</a>
+                <a href="/logout">Logout</a>
             </div>
-
         </div>
 
         </nav>
-
     </header>
     `;
 

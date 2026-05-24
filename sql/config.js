@@ -4,7 +4,7 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'scan_system'
+  database: 'meds'
 });
 
 db.connect((err) => {

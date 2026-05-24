@@ -35,41 +35,8 @@
       <p>Heb je al een account? <a href="../auth/login.html">Log in</a></p>
     </section>
   </main>
-
-  <script>
-    document.getElementById("signupForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const formData = {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        password: document.getElementById("password").value,
-        dob: document.getElementById("dob").value,
-        phone: document.getElementById("phone").value
-      };
-
-      try {
-        const response = await fetch("/signup", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify(formData)
-        });
-
-        const data = await response.json();
-
-        if(response.ok) {
-          alert("Account succesvol aangemaakt! Log nu in.");
-          window.location.href = data.redirect || "/login";
-        } else {
-          alert("Fout bij signup: " + (data.error || data.message));
-        }
-      } catch(err) {
-        alert("Server error: " + err.message);
-      }
-    });
-  </script>
-
     {{footer}}
 
+<script src="../../public/js/signup.js"></script>
 </body>
 </html>
