@@ -3,33 +3,32 @@
 
 {{head}}
 <head>
-    <link rel="stylesheet" href="../../css/auth.css">
+  <link rel="stylesheet" href="../../css/auth.css">
+  <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
 
     {{header}}
 
     <!-- MAIN CONTENT -->
-    <main class="container">
-        <section class="title-card">
-            <h1>Login</h1>
-            <p>Log in om toegang te krijgen tot jouw medische gegevens.</p>
-        </section>
+     <main class="container">
+    <section class="auth-card">
+      <h1>Login</h1>
+      <form action="auth/login" method="POST" class="form-box">
+        <label>Email</label>
+        <input type="email" name="email" id="email" placeholder="Email" required>
 
-        <form class="form-box">
-            <label>Email</label>
-            <input type="email" placeholder="Voer je email in" required>
+        <label>Wachtwoord</label>
+        <input type="password" name="password" id="password" placeholder="Password" required>
 
-            <label>Wachtwoord</label>
-            <input type="password" placeholder="Voer je wachtwoord in" required>
-
-            <button type="submit" class="btn login">Login</button>
-            <a href="#" class="forgot-link">Wachtwoord vergeten?</a>
-        </form>
-    </main>
+        <button type="submit" class="btn">Login</button>
+      </form>
+    </section>
+  </main>
 
     {{footer}}
 
+<script src="../js/login.js"></script>
 </body>
 </html>
 

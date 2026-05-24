@@ -268,7 +268,7 @@ body {
 
 .login{
     background:#7ED957;
-    color:white ;
+    color:white !important;
 }
 
 .signup{

@@ -1,15 +1,13 @@
-require('dotenv').config();
-
 const express = require('express');
-const mysql = require('mysql2');
-const cors = require('cors');
-
 const app = express();
 
-app.use(cors());
+const authRoutes = require('./routes/authRoutes');
+
 app.use(express.json());
 
+app.use('/api/auth', authRoutes);
 
+<<<<<<< HEAD
 // DATABASE
 
 const db = mysql.createConnection({
@@ -116,4 +114,8 @@ app.listen(process.env.PORT, () => {
         process.env.PORT
     );
 
+=======
+app.listen(3000, () => {
+  console.log('Server running');
+>>>>>>> 74b73e3a678e5825974592c9808f7d526e9e1303
 });
