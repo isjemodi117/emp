@@ -2,32 +2,30 @@ const express = require("express");
 const router = express.Router();
 const db = require("../sql/config");
 
+
+// =========================
 // GET PATIENT BY ID
+// =========================
 router.get("/patient/:id", (req, res) => {
 
     const idNumber = req.params.id;
 
-    const sql =
-        "SELECT * FROM patients WHERE id_number = ?";
+    const sql = "SELECT * FROM patients WHERE id_number = ?";
 
     db.query(sql, [idNumber], (err, results) => {
 
         if (err) {
-
             return res.status(500).json({
                 success: false,
                 message: "Database error"
             });
-
         }
 
         if (results.length === 0) {
-
             return res.status(404).json({
                 success: false,
                 message: "Patient not found"
             });
-
         }
 
         res.json({
@@ -39,7 +37,10 @@ router.get("/patient/:id", (req, res) => {
 
 });
 
+
+// =========================
 // GET ALL PATIENTS
+// =========================
 router.get("/patients", (req, res) => {
 
     db.query("SELECT * FROM patients", (err, results) => {
@@ -54,7 +55,10 @@ router.get("/patients", (req, res) => {
 
 });
 
+
+// =========================
 // PATIENT COUNT
+// =========================
 router.get("/patient-count", (req, res) => {
 
     db.query(
@@ -71,5 +75,95 @@ router.get("/patient-count", (req, res) => {
     );
 
 });
+
+
+// =========================
+// ADD NEW PATIENT (CREATE)
+// =========================
+router.post("/patients", (req, res) => {
+
+    const { id_number, name, birthdate, bloodtype } = req.body;
+
+    const sql = `
+        INSERT INTO patients (id_number, name, birthdate, bloodtype)
+        VALUES (?, ?, ?, ?)
+    `;
+
+    db.query(sql, [id_number, name, birthdate, bloodtype], (err) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: err
+            });
+        }
+
+        res.json({
+            success: true,
+            message: "Patiënt toegevoegd"
+        });
+
+    });
+
+});
+
+
+// =========================
+// UPDATE PATIENT (UPDATE)
+// =========================
+router.put("/patient/:id", (req, res) => {
+
+    const { name, birthdate, bloodtype } = req.body;
+
+    const sql = `
+        UPDATE patients
+        SET name = ?, birthdate = ?, bloodtype = ?
+        WHERE id_number = ?
+    `;
+
+    db.query(sql, [name, birthdate, bloodtype, req.params.id], (err) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: err
+            });
+        }
+
+        res.json({
+            success: true,
+            message: "Patiënt bijgewerkt"
+        });
+
+    });
+
+});
+
+
+// =========================
+// DELETE PATIENT (DELETE)
+// =========================
+router.delete("/patient/:id", (req, res) => {
+
+    const sql = "DELETE FROM patients WHERE id_number = ?";
+
+    db.query(sql, [req.params.id], (err) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                error: err
+            });
+        }
+
+        res.json({
+            success: true,
+            message: "Patiënt verwijderd"
+        });
+
+    });
+
+});
+
 
 module.exports = router;
