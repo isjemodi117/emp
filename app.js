@@ -13,6 +13,7 @@ const pageRoutes = require("./routes/pageRoutes");
 const authRoutes = require("./routes/authRoutes");
 const patientRoutes = require("./routes/patientRoutes");
 const adminRoutes = require("./routes/patientRoutes");
+const db = require("./sql/config");
 
 // MIDDLEWARE
 app.use(cors());
@@ -49,23 +50,41 @@ app.use((req, res) => {
 
 });
 
-app.use (express.json())
 app.post('/patients', (req, res) => {
-    console.log(req.body);
-    res.json({
-        succes: true,
-        message: 'Patient ontvangen'
-    });
+    const { naam, email } = req.body;
+
+    if (!naam || !email) {
+        return res.status(400).json({
+            succes: false,
+            message: 'Naam en email zijn verplicht'
+        });
+    }
+
+    db.query(
+        "INSERT INTO patients (naam, email) VALUES (?, ?)",
+        [naam, email],
+        (err, results) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({
+                    succes: false,
+                    message: 'Database error'
+                });
+            }
+
+            res.json({
+                succes: true,
+                message: 'Patient ontvangen',
+                id: results.insertId
+            });
+        }
+    );
 });
 
-db.query(
-    "INSERT INTO patients (naam, email) VALUES (?, ?)",
-    [naam, email]
-);
-
 // START SERVER
-app.listen(3000, () => {
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
 
-    console.log("Server running on http://localhost:3000");
+    console.log(`Server running on http://localhost:${port}`);
 
 });

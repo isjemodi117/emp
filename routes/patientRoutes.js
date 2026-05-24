@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../sql/config");
 
 // 🔐 Session-based admin beveiliging
-const { requireAdmin } = require("../middleware/authmiddelware");
+const { requireAdmin } = require("../middlewares/authMiddleware");
 
 
 // =========================
