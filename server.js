@@ -37,6 +37,15 @@ db.connect((err) => {
 
 });
 
+app.get('/test-db', async (req, res) => {
+    try {
+        const [rows] = await db.promise().query('SELECT 1 + 1 AS solution');
+        res.json(rows);
+    } catch (err) {
+        ress.status(500).json({ error: 'Database error' });
+    }
+});
+
 
 // GET PATIENT
 
