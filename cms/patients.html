@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="title-card">
+            <h1> Patiëntenbeheer</h1>
+            <p>Bekijk bestaande patiënten en voeg nieuwe gegevens toe.</p>
+        </div>
+
+       
+
+        <section>
+            <h2>Vul in</h2>
+            <form id="client-form">
+                <label for="szf">SZF code</label>
+                <input id="szf" required>
+
+                <label for="fname">Voornaam</label>
+                <input id="fname" required>
+
+                <label for="lname">Achternaam</label>
+                <input id="lname" required>
+
+                <label for="gender">Geslacht</label>
+                <input id="gender">
+
+                <label for="birth">Geboortedatum</label>
+                <input id="birth" type="date">
+
+                <label for="phone">Telefoon</label>
+                <input id="phone">
+
+                <label for="address">Adres</label>
+                <input id="address">
+
+                <label for="emergency">Noodcontact</label>
+                <input id="emergency">
+
+                <label for="blood">Bloedgroep</label>
+                <input id="blood">
+
+                <button type="submit">Voeg toe</button>
+            </form>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

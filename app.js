@@ -1,3 +1,6 @@
+require('dotenv').config();
+
+const cors = require('cors');
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
@@ -11,8 +14,85 @@ dotenv.config();
    EXPRESS APP
 ========================= */
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+
+
+// DATABASE
+
+const db = mysql.createConnection({
+
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+
+});
+
+
+// CONNECT
+
+db.connect((err) => {
+    if(err){
+        console.log(err);
+        return;
+    }
+    console.log('MySQL Connected');
+});
+
+
+
+
+
+// GET PATIENT
+
+app.get('/api/patient/:id', (req, res) => {
+
+    const idNumber = req.params.id;
+
+    const sql =
+        'SELECT * FROM patients WHERE id_number = ?';
+
+    db.query(sql, [idNumber], (err, results) => {
+
+        if(err){
+
+            return res.status(500).json({
+
+                success:false,
+                message:'Database error'
+
+            });
+
+        }
+
+        if(results.length === 0){
+
+            return res.status(404).json({
+
+                success:false,
+                message:'Patient not found'
+
+            });
+
+        }
+
+        res.json({
+
+            success:true,
+            patient:results[0]
+
+        });
+
+    });
+
+});
+
+
+
+
+
 
 /* =========================
    DUMMY USER
@@ -206,6 +286,18 @@ app.get("/api/patient-count", (req, res) => {
         res.json(results[0]);
     });
 });
+
+
+// SERVER DOWN PAGE
+app.use((req, res) => {
+    res.status(404).send(`
+        <h1>
+            404 - Server Offline
+        </h1>
+    `);
+});
+
+
 
 /* =========================
    START SERVER
