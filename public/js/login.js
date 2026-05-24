@@ -7,7 +7,8 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   const res = await fetch("/auth/login", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token")
     },
     body: JSON.stringify({ email, password })
   });

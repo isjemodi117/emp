@@ -1,6 +1,6 @@
 const express = require("express");
-
 const router = express.Router();
+const { redirectIfLoggedIn } = require("../middlewares/authMiddleware");
 
 const render = require("../utils/render");
 const {
@@ -15,15 +15,14 @@ router.get("/", (req, res) => {
     const user = currentUser(req);
     if (!user.loggedIn) {
         return res.send( render("index.html",{
-        css: `<link rel="stylesheet" href="css/profile.css">`
+        css: `<link rel="stylesheet" href="css/profile.css">`,
+        user: currentUser(req)
     }));
     }
     return res.send(
         render("pages/dashboard.html", {
-            css: `
-                <link rel="stylesheet"
-                      href="css/profile.css">
-            `
+            css: `<link rel="stylesheet" href="css/profile.css">`,
+            user: currentUser(req)
         })
     );
 });
@@ -55,7 +54,7 @@ router.get("/emergency", (req, res) => {
 });
 
 // LOGIN
-router.get("/login", (req, res) => {
+router.get("/login", redirectIfLoggedIn, (req, res) => {
     res.send(
         render("pages/auth/login.html")
     );
@@ -104,8 +103,9 @@ router.get("/history", requireAdmin, (req, res) => {
 // DASHBOARD
 router.get("/dashboard", requireAdmin, (req, res) => {
     res.send(
-        render("pages/dashboard.html")
-    );
+        render("pages/dashboard.html",{
+        user: currentUser(req)
+    }));
 });
 
 // PATIENTS
