@@ -1,7 +1,22 @@
-const jwt = require('jsonwebtoken');
-
-const verifyToken = (req, res, next) => {
-  next();
+const currentUser = {
+    loggedIn: false,
+    roles: ["admin", "doctor"],
+    permissions: ["dashboard", "patients", "visits"]
 };
 
-module.exports = verifyToken;
+function requireAdmin(req, res, next) {
+
+    if (!currentUser.roles.includes("admin")) {
+
+        return res.status(403).send("Access denied");
+
+    }
+
+    next();
+
+}
+
+module.exports = {
+    requireAdmin,
+    currentUser
+};
