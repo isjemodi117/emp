@@ -13,7 +13,7 @@ const pageRoutes = require("./routes/pageRoutes");
 const authRoutes = require("./routes/authRoutes");
 const patientRoutes = require("./routes/patientRoutes");
 const adminRoutes = require("./routes/patientRoutes");
-const db = require("./sql/config");
+const db = require("./config/db");
 
 // MIDDLEWARE
 app.use(cors());
