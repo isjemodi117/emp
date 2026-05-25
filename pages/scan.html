@@ -378,7 +378,7 @@
                 addLog(text);
 
                 const regex =
-                    /[A-Z]{1,3}[0-9]{3,8}/g;
+                    /[A-Za-z]{1,3}\s?[0-9]{3,8}/g;
 
                 const matches = text.match(regex);
 
