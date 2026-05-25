@@ -1,0 +1,113 @@
+const express = require("express");
+const cors = require("cors");
+const db = require("./db");
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use(express.static("public"));
+
+/* =========================
+   CLIENTS OPHALEN
+========================= */
+app.get("/clients", (req, res) => {
+    const sql = "SELECT * FROM clients";
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(result);
+    });
+});
+
+/* =========================
+   CLIENT TOEVOEGEN
+========================= */
+app.post("/clients", (req, res) => {
+    const {
+        szf_code,
+        first_name,
+        last_name,
+        gender,
+        birth_date,
+        phone,
+        address,
+        emergency_contact,
+        blood_type
+    } = req.body;
+
+    const sql = `
+        INSERT INTO clients
+        (szf_code, first_name, last_name, gender, birth_date, phone, address, emergency_contact, blood_type)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    db.query(sql, [
+        szf_code,
+        first_name,
+        last_name,
+        gender,
+        birth_date,
+        phone,
+        address,
+        emergency_contact,
+        blood_type
+    ], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: "Client toegevoegd!", clientId: result.insertId });
+    });
+});
+
+app.listen(3001, () => {
+    console.log("Server draait op poort 3001");
+});
+
+
+
+
+
+
+
+
+async function loadClients() {
+    const response = await fetch("/clients");
+    const data = await response.json();
+
+    document.getElementById("clients").innerHTML = data.map(client => `
+        <li>
+            ${client.first_name} ${client.last_name} - ${client.blood_type}
+        </li>
+    `).join("");
+}
+
+async function addClient(event) {
+    event.preventDefault();
+
+    await fetch("/clients", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            szf_code: document.getElementById("szf").value,
+            first_name: document.getElementById("fname").value,
+            last_name: document.getElementById("lname").value,
+            gender: document.getElementById("gender").value,
+            birth_date: document.getElementById("birth").value,
+            phone: document.getElementById("phone").value,
+            address: document.getElementById("address").value,
+            emergency_contact: document.getElementById("emergency").value,
+            blood_type: document.getElementById("blood").value
+        })
+    });
+
+    document.getElementById("client-form").reset();
+    loadClients();
+}
+
+document.getElementById("client-form").addEventListener("submit", addClient);
+loadClients();

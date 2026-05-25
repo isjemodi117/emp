@@ -3,49 +3,40 @@
 
 {{head}}
 <head>
-    <link rel="stylesheet" href="../../css/auth.css">
+  <link rel="stylesheet" href="../../css/auth.css">
+  <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
 
     {{header}}
 
     <!-- MAIN CONTENT -->
-    <main class="container">
-  <section class="auth-card">
-    <h1>Account Aanmaken</h1>
-    <form id="signupForm" method="POST" action="/signup">
-      <div class="form-group">
-        <label for="name">Naam</label>
-        <input type="text" id="name" name="name" placeholder="Voor- en achternaam" required>
-      </div>
+      <main class="container">
+    <section class="auth-card">
+      <h1>Account Aanmaken</h1>
+      <form id="signupForm">
+        <label>Naam</label>
+        <input type="text" id="name" required>
 
-      <div class="form-group">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" name="email" placeholder="jouw@email.com" required>
-      </div>
+        <label>Email</label>
+        <input type="email" id="email" required>
 
-      <div class="form-group">
-        <label for="password">Wachtwoord</label>
-        <input type="password" id="password" name="password" placeholder="********" required>
-      </div>
+        <label>Wachtwoord</label>
+        <input type="password" id="password" required>
 
-      <div class="form-group">
-        <label for="dob">Geboortedatum</label>
-        <input type="date" id="dob" name="dob">
-      </div>
+        <label>Geboortedatum</label>
+        <input type="date" id="dob">
 
-      <div class="form-group">
-        <label for="phone">Telefoonnummer</label>
-        <input type="text" id="phone" name="phone" placeholder="+597 5551234">
-      </div>
+        <label>Telefoonnummer</label>
+        <input type="text" id="phone">
 
-      <button type="submit" class="btn">Sign Up</button>
-    </form>
-    <p>Heb je al een account? <a href="login.html">Log in</a></p>
-  </section>
-</main>
-
+        <button type="submit" class="submit">Sign Up</button>
+      </form>
+      <p>Heb je al een account? <a href="../auth/login.html">Log in</a></p>
+    </section>
+  </main>
     {{footer}}
 
+<script src="../../public/js/signup.js"></script>
 </body>
 </html>
