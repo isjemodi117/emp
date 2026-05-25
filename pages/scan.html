@@ -276,7 +276,7 @@
             }
 
             finalResult.innerHTML = `
-                ID Number:<br>
+                ID code:<br>
                 ${bestValue}
             `;
 
@@ -284,14 +284,16 @@
                 "Confidence: " + highest + " matches";
 
             // 🔹 KOPPEL AAN BACKEND API
-            fetch(`/api/client/${bestValue}`)//was /api/patient/${bestValue}
+            fetch(`/api/client/${bestValue}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
                         finalResult.innerHTML = `
-                            ID Number:<br>${bestValue}<br>
-                            Client Name: ${data.client.name}<br>
-                            Email: ${data.client.email}
+                            ID Code: ${bestValue}<br>
+                            Name: ${data.name}<br>
+                            Blood Type: ${data.blood_type}<br>
+                            Phone: ${data.phone}<br>
+                            Emergency: ${data.emergency_contact}
                         `;
                         statusText.innerText = "Match found in database";
                     } else {
@@ -407,7 +409,7 @@
                 if(matches){
 
                     finalResult.innerHTML = `
-                        ID Number:<br>
+                        ID code:<br>
                         ${matches[0]}
                     `;
 

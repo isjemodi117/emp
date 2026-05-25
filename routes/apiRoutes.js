@@ -112,14 +112,20 @@ router.get("/patient-count", (req, res) => {
 // GET CLIENT BY SZF CODE
 router.get("/client/:szf_code", (req, res) => {
   const szf_code = req.params.szf_code;
-  const sql = "SELECT id, first_name, last_name FROM clients WHERE szf_code = ?";
+  const sql = "SELECT id, first_name, last_name, gender, birth_date, phone, address, emergency_contact, blood_type FROM clients WHERE szf_code = ?";
   db.query(sql, [szf_code], (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     if (results.length > 0) {
       res.json({
         success: true,
         id: results[0].id,
-        name: results[0].first_name + ' ' + results[0].last_name
+        name: results[0].first_name + ' ' + results[0].last_name,
+        gender: results[0].gender,
+        birth_date: results[0].birth_date,
+        phone: results[0].phone,
+        address: results[0].address,
+        emergency_contact: results[0].emergency_contact,
+        blood_type: results[0].blood_type
       });
     } else {
       res.status(404).json({ success: false, error: "Client not found" });
