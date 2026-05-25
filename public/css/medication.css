@@ -1,0 +1,178 @@
+body {
+    background-color: #eaf4ea;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #2e5e2e;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #cfe8cf;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    color: #2e5e2e;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.navbar a {
+    color: #2e5e2e;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: 600;
+}
+
+.navbar a.logout {
+    color: #8b1a1a;
+}
+
+.med-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.med-container h1 {
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #4a7a4a;
+    margin-bottom: 25px;
+}
+
+.med-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.med-card {
+    background: #f8fff8;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #cfe3cf;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.med-card h3 {
+    margin-top: 0;
+    color: #2e5e2e;
+    margin-bottom: 15px;
+}
+
+.med-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.med-table th {
+    background-color: #2e5e2e;
+    color: white;
+    padding: 8px 10px;
+    text-align: left;
+}
+
+.med-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #d4ebd4;
+}
+
+.med-table tr:last-child td {
+    border-bottom: none;
+}
+
+.allergy-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.allergy-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid #d4ebd4;
+}
+
+.allergy-list li:last-child {
+    border-bottom: none;
+}
+
+.allergy-name {
+    font-weight: bold;
+    font-size: 15px;
+    display: block;
+}
+
+.allergy-severity {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 4px 0;
+}
+
+.allergy-severity.ernstig {
+    background-color: #fde8e8;
+    color: #8b1a1a;
+}
+
+.allergy-severity.matig {
+    background-color: #fef3cd;
+    color: #856404;
+}
+
+.allergy-severity.mild {
+    background-color: #d4ebd4;
+    color: #2e5e2e;
+}
+
+.allergy-desc {
+    margin: 4px 0 0 0;
+    font-size: 13px;
+    color: #4a7a4a;
+}
+
+.acties-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: flex-start;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #2e5e2e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #3f7a3f;
+}
+
+.btn-secondary {
+    background-color: #ffffff;
+    color: #2e5e2e;
+    border: 2px solid #2e5e2e;
+}
+
+.btn-secondary:hover {
+    background-color: #eaf4ea;
+}

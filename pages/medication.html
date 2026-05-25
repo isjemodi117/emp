@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicatie & Allergieën | EHBO App</title>
+    <link rel="stylesheet" href="../public/css/medication.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <h2 class="logo">EHBO Patiënt Identifier</h2>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="patient_profile.html">Profiel</a>
+            <a href="patient_history.html">Geschiedenis</a>
+            <a href="../auth/login.html" class="logout">Logout</a>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <section class="med-container">
+
+        <h1>Medicatie & Allergieën</h1>
+        <p class="subtitle">Overzicht van huidige medicatie en bekende allergieën</p>
+
+        <div class="med-grid">
+
+            <!-- HUIDIGE MEDICATIE -->
+            <div class="med-card">
+                <h3>Huidige Medicatie</h3>
+                <table class="med-table">
+                    <thead>
+                        <tr>
+                            <th>Medicijn</th>
+                            <th>Dosering</th>
+                            <th>Frequentie</th>
+                            <th>Sinds</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ibuprofen</td>
+                            <td>400mg</td>
+                            <td>3x per dag</td>
+                            <td>01-03-2026</td>
+                        </tr>
+                        <tr>
+                            <td>Salbutamol</td>
+                            <td>100mcg</td>
+                            <td>Bij klachten</td>
+                            <td>15-01-2025</td>
+                        </tr>
+                        <tr>
+                            <td>Vitamine D</td>
+                            <td>25mcg</td>
+                            <td>1x per dag</td>
+                            <td>10-11-2024</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ALLERGIEËN -->
+            <div class="med-card">
+                <h3>Bekende Allergieën</h3>
+                <ul class="allergy-list">
+                    <li>
+                        <span class="allergy-name">Penicilline</span>
+                        <span class="allergy-severity ernstig">Ernstig</span>
+                        <p class="allergy-desc">Anafylactische reactie mogelijk</p>
+                    </li>
+                    <li>
+                        <span class="allergy-name">Pindanoten</span>
+                        <span class="allergy-severity matig">Matig</span>
+                        <p class="allergy-desc">Huiduitslag en jeuk</p>
+                    </li>
+                    <li>
+                        <span class="allergy-name">Latex</span>
+                        <span class="allergy-severity mild">Mild</span>
+                        <p class="allergy-desc">Lichte irritatie</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ACTIES -->
+            <div class="med-card acties-card">
+                <h3>Acties</h3>
+                <a href="patient_profile.html" class="btn">Terug naar profiel</a>
+                <a href="patient_history.html" class="btn btn-secondary">Bekijk geschiedenis</a>
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
+</html>
