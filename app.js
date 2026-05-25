@@ -35,6 +35,36 @@ app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
 app.use("/api", apiRoutes);
 
+app.get("/api/client/:szf_code", (req, res) => {
+  const szf_code = req.params.szf_code;
+
+  const sql = `
+    SELECT 
+      id, 
+      szf_code, 
+      first_name, 
+      last_name, 
+      gender, 
+      birth_date, 
+      phone, 
+      address, 
+      emergency_contact, 
+      blood_type 
+    FROM clients 
+    WHERE szf_code = ?
+  `;
+
+  db.query(sql, [szf_code], (err, results) => {
+    if (err) {
+      return res.status(500).json({ success: false, error: err.message });
+    }
+    if (results.length > 0) {
+      res.json({ success: true, ...results[0] });
+    } else {
+      res.status(404).json({ success: false, error: "Client not found" });
+    }
+  });
+});
 
 // 404
 app.use((req, res) => {

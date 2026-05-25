@@ -292,12 +292,12 @@
             console.log("API response:", data); // Debug
             if (data.success) {
                 finalResult.innerHTML = `
-                    ID Code: ${bestValue}<br>
-                    First Name: ${data.fname}<br>
-                    Last Name: ${data.lname}<br>
-                    Blood Type: ${data.blood_type}<br>
-                    Phone: ${data.phone}<br>
-                    Emergency: ${data.emergency_contact}
+                    id: ${bestValue}<br>
+                    first_name: ${data.fname}<br>
+                    last_name: ${data.lname}<br>
+                    blood_type: ${data.blood_type}<br>
+                    phone: ${data.phone}<br>
+                    emergency_contact: ${data.emergency_contact}
                 `;
                 statusText.innerText = "Match found in database";
             } else {
@@ -430,12 +430,15 @@ if (matches.length > 0) {
             console.log("API response:", data); // Debug
             if (data.success) {
                 finalResult.innerHTML = `
-                    ID Code: ${bestValue}<br>
-                    Name: ${data.name}<br>
-                    Blood Type: ${data.blood_type}<br>
-                    Phone: ${data.phone}<br>
-                    Emergency: ${data.emergency_contact}
-                `;
+                ID Code: ${data.szf_code}<br>
+                Name: ${data.first_name} ${data.last_name}<br>
+                Gender: ${data.gender}<br>
+                Birth Date: ${data.birth_date}<br>
+                Phone: ${data.phone}<br>
+                Address: ${data.address}<br>
+                Emergency: ${data.emergency_contact}<br>
+                Blood Type: ${data.blood_type}
+      `;
                 statusText.innerText = "Match found in database";
             } else {
                 statusText.innerText = "No match in database";
