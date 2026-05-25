@@ -1,4 +1,4 @@
-require("dotenv").config();
+const db = require("./config/db");
 
 const express = require("express");
 const cors = require("cors");
@@ -35,15 +35,19 @@ app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
 app.use("/api", apiRoutes);
 
-app.get("/api/client/:szf_number", (req, res) => {
-  const szf_number = req.params.szf_number;
-  const sql = "SELECT id, name FROM clients WHERE szf_number = ?";
-  db.query(sql, [szf_number], (err, results) => {
+app.get("/api/client/:szf_code", (req, res) => {
+  const szf_code = req.params.szf_code;
+  const sql = "SELECT id, first_name, last_name FROM clients WHERE szf_code = ?";
+  db.query(sql, [szf_code], (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     if (results.length > 0) {
-      res.json(results[0]);
+      res.json({
+        success: true,
+        id: results[0].id,
+        name: results[0].first_name + ' ' + results[0].last_name
+      });
     } else {
-      res.status(404).json({ error: "Client not found" });
+      res.status(404).json({ success: false, error: "Client not found" });
     }
   });
 });
