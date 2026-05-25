@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     {{head}}
-<head>
-    
-<link rel="stylesheet" href="../css/scan.css">
-    <!-- OCR -->
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-</head>
 <body>
 
     {{header}}
@@ -241,48 +235,48 @@
 
         function processResults(){
 
-    if (detectedValues.length === 0) {
-        finalResult.innerText = "No valid card detected";
-        return;
-    }
+            if(detectedValues.length === 0){
 
-    const counts = {};
-    detectedValues.forEach(value => {
-        counts[value] = (counts[value] || 0) + 1;
-    });
+                finalResult.innerText =
+                    "No valid card detected";
 
-    let bestValue = null;
-    let highest = 0;
-    for (let value in counts) {
-        if (counts[value] > highest) {
-            highest = counts[value];
-            bestValue = value;
-        }
-    }
+                return;
 
-    // Toon eerst het nummer
-    finalResult.innerHTML = `SZF Number:<br>${bestValue}`;
-    statusText.innerText = "Confidence: " + highest + " matches";
-
-    // 🔹 Koppel aan backend API
-    fetch(`/api/client/${bestValue}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.error) {
-                statusText.innerText = "No match in database";
-            } else {
-                finalResult.innerHTML = `
-                    SZF Number:<br>${bestValue}<br>
-                    Client Name: ${data.name}<br>
-                    Internal ID: ${data.id}
-                `;
-                statusText.innerText = "Match found in database";
             }
-        })
-        .catch(err => {
-            statusText.innerText = "Error connecting to server";
-            console.error(err);
-        });
+
+            const counts = {};
+
+            detectedValues.forEach(value => {
+
+                counts[value] =
+                    (counts[value] || 0) + 1;
+
+            });
+
+            let bestValue = null;
+            let highest = 0;
+
+            for(let value in counts){
+
+                if(counts[value] > highest){
+
+                    highest = counts[value];
+
+                    bestValue = value;
+
+                }
+
+            }
+
+            finalResult.innerHTML = `
+                ID Number:<br>
+                ${bestValue}
+            `;
+
+            statusText.innerText =
+                "Confidence: " + highest + " matches";
+
+        }
 
         // LOGS
 
@@ -411,5 +405,6 @@
 
     </script>
 
+{{footer}}
 </body>
 </html>

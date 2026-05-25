@@ -16,13 +16,13 @@ router.get("/", (req, res) => {
     const user = currentUser(req);
     if (!user.loggedIn) {
         return res.send( render("index.html",{
-        css: `<link rel="stylesheet" href="css/profile.css">`,
+        // css: `<link rel="stylesheet" href="css/profile.css">`,
         user: currentUser(req)
     }));
     }
     return res.send(
         render("pages/dashboard.html", {
-            css: `<link rel="stylesheet" href="css/profile.css">`,
+            css: `<link rel="stylesheet" href="css/dashboard.css">`,
             user: currentUser(req)
         })
     );
@@ -32,10 +32,8 @@ router.get("/", (req, res) => {
 router.get("/about", (req, res) => {
     res.send(
         render("pages/about.html", {
-            css: `
-                <link rel="stylesheet"
-                      href="/css/about.css">
-            `
+            css: `<link rel="stylesheet" href="css/about.css">`,
+            user: currentUser(req)
         })
     );
 });
@@ -43,49 +41,70 @@ router.get("/about", (req, res) => {
 // SERVICES
 router.get("/services", (req, res) => {
     res.send(
-        render("pages/services.html")
+        render("pages/services.html", {
+            css: `<link rel="stylesheet" href="css/services.css">`,
+            user: currentUser(req)
+        })
     );
 });
 
 // EMERGENCY
 router.get("/emergency", (req, res) => {
     res.send(
-        render("pages/emergency_contact.html")
+        render("pages/emergency_contact.html", {
+            css: `<link rel="stylesheet" href="css/emergency_contact.css">`,
+            user: currentUser(req)
+        })
     );
 });
 
 // LOGIN
 router.get("/login", redirectIfLoggedIn, (req, res) => {
     res.send(
-        render("pages/auth/login.html")
+        render("pages/auth/login.html", {
+            css: `<link rel="stylesheet" href="css/auth.css">`,
+            user: currentUser(req)
+        })
     );
 });
 
 // SIGNUP
 router.get("/signup", (req, res) => {
     res.send(
-        render("pages/auth/signup.html")
+        render("pages/auth/signup.html", {
+            css: `<link rel="stylesheet" href="css/auth.css">`,
+            user: currentUser(req)
+        })
     );
 });
 
 // POLICY
 router.get("/policy", (req, res) => {
     res.send(
-        render("pages/policy.html")
+        render("pages/policy.html", {
+            // css: `<link rel="stylesheet" href="css/profile.css">`,
+            user: currentUser(req)
+        })
     );
 });
 
 // CONTACT
 router.get("/contact", (req, res) => {
     res.send(
-        render("pages/contact.html")
+        render("pages/contact.html", {
+            // css: `<link rel="stylesheet" href="css/profile.css">`,
+            user: currentUser(req)
+        })
     );
 });
 
 // TERMS
 router.get("/terms", (req, res) => {
     res.send(
-        render("pages/terms.html")
+        render("pages/terms.html", {
+            // css: `<link rel="stylesheet" href="css/profile.css">`,
+            user: currentUser(req)
+        })
     );
 });
 
@@ -93,10 +112,8 @@ router.get("/terms", (req, res) => {
 router.get("/history", requireAdmin, (req, res) => {
     res.send(
         render("pages/history.html", {
-            css: `
-                <link rel="stylesheet"
-                      href="css/history.css">
-            `
+            css: `<link rel="stylesheet" href="css/history.css">`,
+            user: currentUser(req)
         })
     );
 });
@@ -113,10 +130,8 @@ router.get("/dashboard", requireAdmin, (req, res) => {
 router.get("/patients", requireAdmin, (req, res) => {
     res.send(
         render("pages/patients.html", {
-            css: `
-                <link rel="stylesheet"
-                      href="css/patients.css">
-            `
+            css: `<link rel="stylesheet" href="css/patients.css">`,
+            user: currentUser(req)
         })
     );
 });
@@ -125,10 +140,8 @@ router.get("/patients", requireAdmin, (req, res) => {
 router.get("/scan", requireAdmin, (req, res) => {
     res.send(
         render("pages/scan.html", {
-            css: `
-                <link rel="stylesheet"
-                      href="css/scan.css">
-            `
+            css: `<link rel="stylesheet" href="css/scan.css">`,
+            user: currentUser(req)
         })
     );
 });
@@ -137,10 +150,8 @@ router.get("/scan", requireAdmin, (req, res) => {
 router.get("/visits", requireAdmin, (req, res) => {
     res.send(
         render("pages/visits.html", {
-            css: `
-                <link rel="stylesheet"
-                      href="css/visits.css">
-            `
+            css: `<link rel="stylesheet" href="css/visits.css">`,
+            user: currentUser(req)
         })
     );
 });
@@ -149,10 +160,8 @@ router.get("/visits", requireAdmin, (req, res) => {
 router.get("/profile", requireAdmin, (req, res) => {
     res.send(
         render("pages/profile.html", {
-            css: `
-                <link rel="stylesheet"
-                      href="css/profile.css">
-            `
+            css: `<link rel="stylesheet" href="css/profile.css">`,
+            user: currentUser(req)
         })
     );
 });
