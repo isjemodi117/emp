@@ -238,6 +238,8 @@
 
         // FINAL RESULT
 
+               // FINAL RESULT
+
         function processResults(){
 
             if(detectedValues.length === 0){
@@ -280,6 +282,26 @@
 
             statusText.innerText =
                 "Confidence: " + highest + " matches";
+
+            // 🔹 KOPPEL AAN BACKEND API
+            fetch(`/api/patient/${bestValue}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        finalResult.innerHTML = `
+                            ID Number:<br>${bestValue}<br>
+                            Patient Name: ${data.patient.name}<br>
+                            Email: ${data.patient.email}
+                        `;
+                        statusText.innerText = "Match found in database";
+                    } else {
+                        statusText.innerText = "No match in database";
+                    }
+                })
+                .catch(err => {
+                    statusText.innerText = "Error connecting to server";
+                    console.error(err);
+                });
 
         }
 
