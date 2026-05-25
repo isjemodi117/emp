@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SZF Test Card</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .card {
+            width: 500px;
+            height: 300px;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+        
+        .card-header {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        
+        .card-header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #333;
+        }
+        
+        .szf-code {
+            text-align: center;
+            font-size: 80px;
+            font-weight: bold;
+            letter-spacing: 10px;
+            font-family: 'Courier New', monospace;
+            color: #000;
+            margin: 20px 0;
+            text-transform: uppercase;
+        }
+        
+        .patient-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        
+        .info-item {
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .info-value {
+            color: #333;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <h1>MEDICAL ID CARD</h1>
+        </div>
+        
+        <div class="szf-code">SZF10001</div>
+        
+        <div class="patient-info">
+            <div class="info-item">
+                <div class="info-label">NAME</div>
+                <div class="info-value">Marvin Latchmansing</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">BLOOD TYPE</div>
+                <div class="info-value">O+</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">DOB</div>
+                <div class="info-value">1999-05-12</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">PHONE</div>
+                <div class="info-value">7273468</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
