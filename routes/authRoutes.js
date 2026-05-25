@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const db = require("../sql/config");
 
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
+
 router.post("/login", (req, res) => {
 
     const { email, password } = req.body;
@@ -37,6 +41,17 @@ router.post("/login", (req, res) => {
                 message: "Wrong password"
             });
         }
+        
+        // Create JWT token
+        const token = jwt.sign(
+            {
+                id: user.id,
+                email: user.email,
+                role: user.role
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: '1d' }
+        );
 
         // SAVE SESSION
         req.session.user = {
