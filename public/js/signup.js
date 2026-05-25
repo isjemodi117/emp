@@ -19,7 +19,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       console.log("Login success:", data.user);
 
       // redirect manually (optional)
-      window.location.href = "/dashboard";
+      window.location.href = "/";
     } else {
       console.log("Login failed:", data.message);
     }

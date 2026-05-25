@@ -51,7 +51,7 @@ function generateNavbar(user = { loggedIn: false, permissions: [] }) {
             <div class="dropdown-menu">
                 <a href="/profile">Mijn Profiel</a>
                 <a href="/settings">Instellingen</a>
-                <a href="/logout">Logout</a>
+                <a href="/auth/logout">Logout</a>
             </div>
 
         </div>
