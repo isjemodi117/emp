@@ -211,7 +211,9 @@
             ctx.drawImage(video, 0, 0);
 
             const result =
-                await Tesseract.recognize(canvas, 'eng');
+                await Tesseract.recognize(canvas, 'eng', {
+                    tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+                });
 
             const text = result.data.text;
 
@@ -392,7 +394,10 @@
                 const result =
                     await Tesseract.recognize(
                         canvas,
-                        'eng'
+                        'eng',
+                        {
+                            tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+                        }
                     );
 
                 const text = result.data.text;
