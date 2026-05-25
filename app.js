@@ -35,17 +35,13 @@ app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
 app.use("/api", apiRoutes);
 
-// Scanner endpoint
 app.get("/api/client/:szf_number", (req, res) => {
   const szf_number = req.params.szf_number;
-
   const sql = "SELECT id, name FROM clients WHERE szf_number = ?";
   db.query(sql, [szf_number], (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
+    if (err) return res.status(500).json({ error: err.message });
     if (results.length > 0) {
-      res.json(results[0]); // eerste resultaat teruggeven
+      res.json(results[0]);
     } else {
       res.status(404).json({ error: "Client not found" });
     }
