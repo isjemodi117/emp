@@ -286,22 +286,30 @@
                 "Confidence: " + highest + " matches";
 
             // 🔹 KOPPEL AAN BACKEND API
-    app.get("/api/client/:szf_code", (req, res) => {
-  const szf_code = req.params.szf_code;
-  const sql = "SELECT id, name, blood_type, phone, emergency_contact FROM clients WHERE szf_code = ?";
-  db.query(sql, [szf_code], (err, results) => {
-    if (err) return res.status(500).json({ success: false, error: err.message });
-    if (results.length > 0) {
-      res.json({
-        success: true,
-        ...results[0]
-      });
-    } else {
-      res.status(404).json({ success: false, error: "Client not found" });
-    }
-  });
-});
-}
+    fetch(`http://localhost:3000/api/client/${bestValue}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log("API response:", data); // Debug
+            if (data.success) {
+                finalResult.innerHTML = `
+                    ID Code: ${bestValue}<br>
+                    First Name: ${data.fname}<br>
+                    Last Name: ${data.lname}<br>
+                    Blood Type: ${data.blood_type}<br>
+                    Phone: ${data.phone}<br>
+                    Emergency: ${data.emergency_contact}
+                `;
+                statusText.innerText = "Match found in database";
+            } else {
+                statusText.innerText = "No match in database";
+            }
+        })
+        .catch(err => {
+            statusText.innerText = "Error connecting to server";
+            console.error(err);
+        });
+
+        }
         // LOGS
 
         function addLog(text){
