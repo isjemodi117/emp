@@ -109,5 +109,22 @@ router.get("/patient-count", (req, res) => {
     );
 
 });
+// GET CLIENT BY SZF CODE
+router.get("/client/:szf_code", (req, res) => {
+  const szf_code = req.params.szf_code;
+  const sql = "SELECT id, first_name, last_name FROM clients WHERE szf_code = ?";
+  db.query(sql, [szf_code], (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (results.length > 0) {
+      res.json({
+        success: true,
+        id: results[0].id,
+        name: results[0].first_name + ' ' + results[0].last_name
+      });
+    } else {
+      res.status(404).json({ success: false, error: "Client not found" });
+    }
+  });
+});
 
 module.exports = router;
