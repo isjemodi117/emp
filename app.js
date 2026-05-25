@@ -50,6 +50,26 @@ app.get("/signup", (req, res) => {
     res.send(render("pages/auth/signup.html"));
 });
 
+app.get("/patient", (req, res) => {
+    res.send(render("pages/patient_profile.html"));
+});
+
+app.get("/medication", (req, res) => {
+    res.send(render("pages/medication.html"));
+});
+
+app.get("/history", (req, res) => {
+    res.send(render("pages/patient_history.html"));
+});
+
+app.get("/new-visit", (req, res) => {
+    res.send(render("new_visit.html"));
+});
+
+app.get("/admin", (req, res) => {
+    res.send(render("pages/admin.html"));
+});
+
 
 /* START SERVER */
 app.listen(3000, () => {
