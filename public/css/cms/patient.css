@@ -1,0 +1,113 @@
+/* Basic reset and typography */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#ffffff;
+    min-height:100vh;
+    color:#1e1e1e;
+    padding:20px;
+}
+
+/* Layout container */
+.container{
+    width:100%;
+    max-width:900px;
+    margin:0 auto;
+    padding:20px;
+}
+
+/* Title card / header */
+.title-card{
+    background:rgba(126, 217, 87, 0.15);
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.title-card h1{
+    font-size:32px;
+    color:#2f7d32;
+}
+
+.title-card p{
+    margin-top:8px;
+    color:#4d4d4d;
+}
+
+section{
+    margin-top:24px;
+}
+
+section h2{
+    font-size:22px;
+    color:#2f7d32;
+    margin-bottom:12px;
+}
+
+/* Clients list */
+#clients{
+    list-style:none;
+    margin-top:12px;
+    padding:0;
+}
+
+#clients li{
+    padding:10px 12px;
+    border-bottom:1px solid #eee;
+}
+
+/* Form styles (fits your current form structure) */
+#client-form{
+    margin-top:18px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+#client-form label{
+    font-size:14px;
+    color:#333;
+}
+
+#client-form input{
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    width:100%;
+    max-width:420px;
+}
+
+#client-form button{
+    padding:10px 16px;
+    border-radius:8px;
+    border:none;
+    background:#2f7d32;
+    color:#fff;
+    cursor:pointer;
+    width:fit-content;
+}
+
+#client-form button:hover{
+    background:#1e6b28;
+    transform:translateY(-1px);
+}
+
+/* Light footer */
+.footer{
+    text-align:center;
+    margin-top:30px;
+    color:#777;
+}
+
+/* Responsive tweaks */
+@media (max-width:600px){
+    .container{padding:12px}
+    .title-card h1{font-size:24px}
+    #client-form input{max-width:100%}
+}

@@ -1,0 +1,348 @@
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:#eef6ee;
+    color:#1e1e1e;
+    min-height:100vh;
+}
+
+/* =========================
+   PATIENT PROFILE
+========================= */
+
+.patient-profile{
+    width:95%;
+    max-width:1500px;
+
+    margin:40px auto;
+
+    background:white;
+
+    border-radius:28px;
+
+    padding:40px;
+
+    display:flex;
+
+    gap:40px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+
+/* LEFT */
+
+.profile-left{
+    width:300px;
+}
+
+.patient-img{
+    width:100%;
+    height:320px;
+
+    object-fit:cover;
+
+    border-radius:24px;
+
+    border:5px solid #dcefdc;
+}
+
+/* RIGHT */
+
+.profile-right{
+    flex:1;
+}
+
+.profile-right h1{
+    font-size:42px;
+    color:#2f7d32;
+    margin-bottom:8px;
+}
+
+.patient-id{
+    color:#777;
+    margin-bottom:35px;
+    font-size:16px;
+}
+
+/* GRID */
+
+.profile-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(230px,1fr));
+
+    gap:22px;
+}
+
+.profile-item{
+    background:#f8fcf8;
+
+    padding:22px;
+
+    border-radius:18px;
+
+    border:1px solid #e2efe2;
+
+    transition:0.3s;
+}
+
+.profile-item:hover{
+    transform:translateY(-2px);
+}
+
+.profile-item span{
+    display:block;
+
+    color:#777;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+}
+
+.profile-item strong{
+    color:#1e1e1e;
+
+    font-size:18px;
+}
+
+/* =========================
+   HISTORY
+========================= */
+
+.history-container{
+    width:95%;
+    max-width:1500px;
+
+    margin:40px auto;
+}
+
+.history-title{
+    color:#2f7d32;
+
+    font-size:34px;
+
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#666;
+
+    margin-bottom:35px;
+
+    font-size:17px;
+}
+
+/* =========================
+   HISTORY LIST
+========================= */
+
+.history-list{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+}
+
+/* CARD */
+
+.history-card{
+    background:white;
+
+    border-radius:24px;
+
+    padding:32px;
+
+    box-shadow:0 8px 24px rgba(0,0,0,0.06);
+
+    border-left:8px solid #7ED957;
+
+    transition:0.3s;
+}
+
+.history-card:hover{
+    transform:translateY(-3px);
+}
+
+/* TYPES */
+
+.history-card.emergency{
+    border-left-color:#ff4d4f;
+}
+
+.history-card.doctor{
+    border-left-color:#2f7d32;
+}
+
+.history-card.medication{
+    border-left-color:#f0ad4e;
+}
+
+/* TOP */
+
+.history-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:25px;
+}
+
+.history-top h3{
+    color:#2f7d32;
+    font-size:28px;
+}
+
+.history-date{
+    color:#777;
+    font-size:15px;
+}
+
+/* CONTENT */
+
+.history-content p{
+    margin:14px 0;
+    line-height:1.7;
+}
+
+.history-content strong{
+    color:#2f7d32;
+}
+
+/* LISTS */
+
+.history-content ul{
+    margin-top:10px;
+    margin-bottom:20px;
+
+    padding-left:25px;
+}
+
+.history-content li{
+    margin-bottom:10px;
+}
+
+/* TAGS */
+
+.tag-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+
+    margin-top:10px;
+    margin-bottom:20px;
+}
+
+.tag{
+    background:#dff6df;
+
+    color:#2f7d32;
+
+    padding:10px 16px;
+
+    border-radius:999px;
+
+    font-size:14px;
+
+    font-weight:600;
+}
+
+.tag.warning{
+    background:#fff1d6;
+    color:#d48806;
+}
+
+/* NOTES */
+
+.notes{
+    background:#f7f7f7;
+
+    padding:18px;
+
+    border-radius:16px;
+
+    margin-top:10px;
+
+    line-height:1.7;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1100px){
+
+    .patient-profile{
+        flex-direction:column;
+    }
+
+    .profile-left{
+        width:100%;
+    }
+
+    .patient-img{
+        height:380px;
+    }
+}
+
+@media(max-width:800px){
+
+    .navbar{
+        flex-direction:column;
+        gap:20px;
+        padding:20px;
+    }
+
+    .navbar nav{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .profile-right h1{
+        font-size:32px;
+    }
+
+    .history-top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .history-top h3{
+        font-size:24px;
+    }
+}
+
+@media(max-width:600px){
+
+    .patient-profile,
+    .history-card{
+        padding:22px;
+    }
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+    .history-title{
+        font-size:28px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .logo-img{
+        width:55px;
+        height:55px;
+    }
+}

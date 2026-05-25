@@ -1,77 +1,83 @@
+const db = require("./config/db");
+
 const express = require("express");
+const cors = require("cors");
 const path = require("path");
-const fs = require("fs");
+const session = require("express-session");
 
 const app = express();
+
+// ROUTES
+const apiRoutes = require("./routes/apiRoutes");
+const pageRoutes = require("./routes/pageRoutes");
+const authRoutes = require("./routes/authRoutes");
+const patientRoutes = require("./routes/patientRoutes");
+
+// MIDDLEWARE
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(session({
+    secret: "geheime_sleutel",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        secure: false,
+        maxAge: 1000 * 60 * 60  // 1 HOUR
+    }
+}));
 
 
-/* READ FILE HELPER */
-function load(filePath) {
-    return fs.readFileSync(path.join(__dirname, filePath), "utf8");
-}
+// ROUTES
+app.use("/", pageRoutes);
+app.use("/auth", authRoutes);
+app.use("/api", apiRoutes);
 
-/* TEMPLATE RENDER ENGINE */
-function render(filePath) {
-    let html = load(filePath);
+app.get("/api/client/:szf_code", (req, res) => {
+  const szf_code = req.params.szf_code;
 
-    html = html.replaceAll("{{head}}", load("partials/head.html"));
-    html = html.replaceAll("{{header}}", load("partials/header.html"));
-    html = html.replaceAll("{{nav}}", load("partials/nav.html"));
-    html = html.replaceAll("{{footer}}", load("partials/footer.html"));
+  const sql = `
+    SELECT 
+      id, 
+      szf_code, 
+      first_name, 
+      last_name, 
+      gender, 
+      birth_date, 
+      phone, 
+      address, 
+      emergency_contact, 
+      blood_type 
+    FROM clients 
+    WHERE szf_code = ?
+  `;
 
-    return html;
-}
-
-/* ROUTES */
-app.get("/", (req, res) => {
-    res.send(render("index.html"));
+  db.query(sql, [szf_code], (err, results) => {
+    if (err) {
+      return res.status(500).json({ success: false, error: err.message });
+    }
+    if (results.length > 0) {
+      res.json({ success: true, ...results[0] });
+    } else {
+      res.status(404).json({ success: false, error: "Client not found" });
+    }
+  });
 });
 
-app.get("/about", (req, res) => {
-    res.send(render("pages/about.html"));
+// 404
+app.use((req, res) => {
+
+    res.status(404).send(`
+        <h1>404 - Server Offline</h1>
+    `);
+
 });
 
-app.get("/services", (req, res) => {
-    res.send(render("pages/services.html"));
-});
-
-
-app.get("/emergency", (req, res) => {
-    res.send(render("pages/emergency_contact.html"));
-});
-
-
-app.get("/login", (req, res) => {
-    res.send(render("pages/auth/login.html"));
-});
-
-app.get("/signup", (req, res) => {
-    res.send(render("pages/auth/signup.html"));
-});
-
-app.get("/patient", (req, res) => {
-    res.send(render("pages/patient_profile.html"));
-});
-
-app.get("/medication", (req, res) => {
-    res.send(render("pages/medication.html"));
-});
-
-app.get("/history", (req, res) => {
-    res.send(render("pages/patient_history.html"));
-});
-
-app.get("/new-visit", (req, res) => {
-    res.send(render("new_visit.html"));
-});
-
-app.get("/admin", (req, res) => {
-    res.send(render("pages/admin.html"));
-});
-
-
-/* START SERVER */
+// START SERVER
 app.listen(3000, () => {
+
     console.log("Server running on http://localhost:3000");
+
 });

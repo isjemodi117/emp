@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+    {{head}}
+    <head>
+<link rel="stylesheet" href="../css/scan.css">
+    <!-- OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+<body>
+
+    {{header}}
+
+    <!-- MAIN -->
+
+    <div class="container">
+
+        <div class="title-card">
+
+            <h1>Patient Card Scanner</h1>
+
+            <p>
+                Scan ID card or SZF card to automatically retrieve patient data.
+            </p>
+
+        </div>
+
+        <div class="scan-wrapper">
+
+            <!-- LEFT -->
+
+            <div class="scanner-card">
+
+                <div class="camera-box">
+
+                    <video id="video" autoplay playsinline></video>
+
+                    <div class="scan-overlay"></div>
+
+                </div>
+
+                <div class="controls">
+
+                    <button class="start-btn" onclick="startScanning()">
+                        Start Scan
+                    </button>
+
+                    <button class="stop-btn" onclick="stopScanning()">
+                        Stop Scan
+                    </button>
+
+                    <button class="upload-btn" onclick="openUpload()">
+                        Upload Card
+                    </button>
+
+                </div>
+
+                <input
+                    type="file"
+                    id="imageUpload"
+                    accept="image/*"
+                    capture="environment"
+                    style="display:none"
+                >
+
+            </div>
+
+            <!-- RIGHT -->
+
+            <div class="side-panel">
+
+                <h2>Detected Result</h2>
+
+                <div class="result-box">
+
+                    <div class="result-title">
+                        Best Matching Value
+                    </div>
+
+                    <div class="result-value" id="finalResult">
+                        Waiting...
+                    </div>
+
+                </div>
+
+                <div class="result-box">
+
+                    <div class="result-title">
+                        Status
+                    </div>
+
+                    <div class="result-value" id="statusText">
+                        Idle
+                    </div>
+
+                </div>
+
+                <img id="previewImage">
+
+                <div class="logs" id="logs"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- HIDDEN CANVAS -->
+
+    <canvas id="canvas" style="display:none;"></canvas>
+
+    <script>
+
+        const video = document.getElementById("video");
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        const finalResult = document.getElementById("finalResult");
+        const logs = document.getElementById("logs");
+        const statusText = document.getElementById("statusText");
+
+        const imageUpload = document.getElementById("imageUpload");
+        const previewImage = document.getElementById("previewImage");
+
+        let scanning = false;
+        let scanInterval;
+
+        let detectedValues = [];
+
+        // START CAMERA
+
+        async function initCamera(){
+
+            try{
+
+                const stream =
+                    await navigator.mediaDevices.getUserMedia({
+
+                    video:{
+                        facingMode:"environment",
+                        width:{ ideal:1280 },
+                        height:{ ideal:720 }
+                    }
+
+                });
+
+                video.srcObject = stream;
+
+            }catch(error){
+
+                alert("Cannot access camera");
+
+                console.error(error);
+
+            }
+
+        }
+
+        initCamera();
+
+        // START SCAN
+
+        async function startScanning(){
+
+            if(scanning) return;
+
+            scanning = true;
+
+            detectedValues = [];
+
+            logs.innerHTML = "";
+
+            statusText.innerText = "Scanning...";
+
+            scanInterval = setInterval(async () => {
+
+                await scanFrame();
+
+            }, 1000);
+
+            setTimeout(() => {
+
+                stopScanning();
+
+                processResults();
+
+            }, 10000);
+
+        }
+
+        // STOP SCAN
+
+        function stopScanning(){
+
+            scanning = false;
+
+            clearInterval(scanInterval);
+
+            statusText.innerText = "Stopped";
+
+        }
+
+        // SCAN FRAME
+
+        async function scanFrame(){
+
+            if(!scanning) return;
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            ctx.drawImage(video, 0, 0);
+
+            const result =
+                await Tesseract.recognize(canvas, 'eng', {
+                    tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+                });
+
+            const text = result.data.text;
+
+            console.log(text);
+
+            addLog(text);
+
+            const regex =
+                /[A-Z0-9]{2,9}/g;
+
+            const matches = text.match(regex);
+
+            if(matches){
+
+                matches.forEach(value => {
+
+                    detectedValues.push(value);
+
+                });
+
+            }
+
+        }
+
+        // FINAL RESULT
+
+               // FINAL RESULT
+
+        function processResults(){
+
+            if(detectedValues.length === 0){
+
+                finalResult.innerText =
+                    "No valid card detected";
+
+                return;
+
+            }
+
+            const counts = {};
+
+            detectedValues.forEach(value => {
+
+                counts[value] =
+                    (counts[value] || 0) + 1;
+
+            });
+
+            let bestValue = null;
+            let highest = 0;
+
+            for(let value in counts){
+
+                if(counts[value] > highest){
+
+                    highest = counts[value];
+
+                    bestValue = value;
+
+                }
+
+            }
+
+            finalResult.innerHTML = `
+                ID code:<br>
+                ${bestValue}
+            `;
+
+            statusText.innerText =
+                "Confidence: " + highest + " matches";
+
+            // 🔹 KOPPEL AAN BACKEND API
+    fetch(`http://localhost:3000/api/client/${bestValue}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log("API response:", data); // Debug
+            if (data.success) {
+                finalResult.innerHTML = `
+                    id: ${bestValue}<br>
+                    first_name: ${data.fname}<br>
+                    last_name: ${data.lname}<br>
+                    blood_type: ${data.blood_type}<br>
+                    phone: ${data.phone}<br>
+                    emergency_contact: ${data.emergency_contact}
+                `;
+                statusText.innerText = "Match found in database";
+            } else {
+                statusText.innerText = "No match in database";
+            }
+        })
+        .catch(err => {
+            statusText.innerText = "Error connecting to server";
+            console.error(err);
+        });
+
+        }
+        // LOGS
+
+        function addLog(text){
+
+            const div = document.createElement("div");
+
+            div.className = "log-item";
+
+            div.innerText = text;
+
+            logs.prepend(div);
+
+        }
+
+        // OPEN IMAGE UPLOAD
+
+        function openUpload(){
+
+            imageUpload.click();
+
+        }
+
+        // IMAGE UPLOAD OCR
+
+        imageUpload.addEventListener(
+            "change",
+            async function(event){
+
+            const file = event.target.files[0];
+
+            if(!file) return;
+
+            statusText.innerText =
+                "Loading image...";
+
+            const img = new Image();
+
+            img.onload = async function(){
+
+                previewImage.src = img.src;
+                previewImage.style.display = "block";
+
+                // AUTO ROTATE IF LANDSCAPE
+
+                if(img.width > img.height){
+
+                    canvas.width = img.height;
+                    canvas.height = img.width;
+
+                    ctx.save();
+
+                    ctx.translate(
+                        canvas.width / 2,
+                        canvas.height / 2
+                    );
+
+                    ctx.rotate(
+                        90 * Math.PI / 180
+                    );
+
+                    ctx.drawImage(
+                        img,
+                        -img.width / 2,
+                        -img.height / 2
+                    );
+
+                    ctx.restore();
+
+                }else{
+
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    ctx.drawImage(img, 0, 0);
+
+                }
+
+                statusText.innerText =
+                    "Scanning uploaded image...";
+
+                // OCR
+
+                const result =
+                    await Tesseract.recognize(
+                        canvas,
+                        'eng',
+                        {
+                            tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+                        }
+                    );
+
+                const text = result.data.text;
+
+                console.log(text);
+
+                addLog(text);
+
+                const regex =
+                    /[A-Z0-9]{2,9}/g;
+
+                // Na OCR en regex verwerking
+                const matches = text.match(regex);
+
+if (matches.length > 0) {
+    // Kies de waarde die het vaakst voorkomt
+    const bestValue = matches.sort((a, b) =>
+        matches.filter(v => v === a).length - matches.filter(v => v === b).length
+    ).pop();
+
+    // Toon alleen het beste resultaat
+    finalResult.innerHTML = `ID Number: ${bestValue}`;
+    statusText.innerText = "Scanning complete";
+
+    // Koppel direct aan backend API
+    fetch(`http://localhost:3000/api/client/${bestValue}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log("API response:", data); // Debug
+            if (data.success) {
+                finalResult.innerHTML = `
+                ID Code: ${data.szf_code}<br>
+                Name: ${data.first_name} ${data.last_name}<br>
+                Gender: ${data.gender}<br>
+                Birth Date: ${data.birth_date}<br>
+                Phone: ${data.phone}<br>
+                Address: ${data.address}<br>
+                Emergency: ${data.emergency_contact}<br>
+                Blood Type: ${data.blood_type}
+      `;
+                statusText.innerText = "Match found in database";
+            } else {
+                statusText.innerText = "No match in database";
+            }
+        })
+        .catch(err => {
+            statusText.innerText = "Error connecting to server";
+            console.error(err);
+        });
+} else {
+    statusText.innerText = "No valid card detected";
+}
+
+            };
+
+            img.src = URL.createObjectURL(file);
+
+        });
+
+    </script>
+
+{{footer}}
+</body>
+</html>

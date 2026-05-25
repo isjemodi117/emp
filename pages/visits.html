@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{head}}
+<head>
+    <link rel="stylesheet" href="../css/visits.css">
+</head>
+<body>
+
+{{header}}
+
+<section class="doctor-visits">
+
+    <!-- TOP BAR -->
+    <div class="visit-header">
+
+        <h1>Doctor Visit Panel</h1>
+
+        <div class="scan-box">
+            <input type="text" placeholder="Scan / Enter Patient ID">
+            <button>Scan</button>
+        </div>
+
+    </div>
+
+    <!-- PATIENT INFO -->
+    <div class="patient-preview">
+
+        <img src="/img/patient.jpg" class="patient-img">
+
+        <div>
+            <h2>Rajesh Sewcharan</h2>
+            <p>ID: EMP-2026-0012</p>
+            <p>Status: <span class="status">Active</span></p>
+        </div>
+
+    </div>
+
+    <!-- VISIT FORM -->
+    <div class="visit-form">
+
+        <h2>Nieuwe Visit Registratie</h2>
+
+        <div class="grid">
+
+            <div class="form-group">
+                <label>Symptomen</label>
+                <textarea></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Diagnose</label>
+                <textarea></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Vitale waarden</label>
+                <textarea placeholder="Hartslag, bloeddruk, temperatuur..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Behandeling</label>
+                <textarea></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Medicatie</label>
+                <textarea></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Urgentie</label>
+                <select>
+                    <option>Laag</option>
+                    <option>Medium</option>
+                    <option>Hoog</option>
+                    <option>Critical</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="actions">
+            <button class="save">Opslaan Visit</button>
+        </div>
+
+    </div>
+
+    <!-- HISTORY PREVIEW -->
+    <div class="history-preview">
+
+        <h2>Recente Visits</h2>
+
+        <div class="history-card">
+            <h3>EHBO Visit - 05-05-2026</h3>
+            <p>Benauwdheid, behandeling uitgevoerd</p>
+        </div>
+
+    </div>
+
+</section>
+
+{{footer}}
+
+</body>
+</html>

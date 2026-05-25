@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{head}}
+<head>
+  <link rel="stylesheet" href="../../css/auth.css">
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+
+    {{header}}
+    
+
+  <main class="dashboard-container">
+    <!-- Welkom / intro -->
+    <section class="welcome">
+      <h2>Welkom op het Dashboard</h2>
+      <p>Hier zie je een overzicht van patiënten, bezoeken en noodmeldingen.</p>
+    </section>
+
+    <!-- Statistieken -->
+    <section class="stats-grid">
+      <div class="stats-card">
+        <h3>Totaal patiënten</h3>
+        <p id="total-patients">0</p>
+      </div>
+      <div class="stats-card">
+        <h3>Bezoeken vandaag</h3>
+        <p id="visits-today">0</p>
+      </div>
+      <div class="stats-card">
+        <h3>Noodmeldingen deze week</h3>
+        <p id="emergencies-week">0</p>
+      </div>
+    </section>
+
+    <!-- Snelle acties -->
+    <section class="quick-actions">
+      <h2>Snelle acties</h2>
+      <div class="actions-grid">
+        <a href="patients.html" class="btn primary">Nieuwe patiënt toevoegen</a>
+        <a href="visits.html" class="btn secondary">Nieuw bezoek registreren</a>
+        <a href="emergency_contact.html" class="btn danger">Noodmelding openen</a>
+      </div>
+    </section>
+
+    <!-- Recente activiteiten -->
+    <section class="recent-activity">
+      <h2>Recente activiteiten</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Patiënt</th>
+            <th>Type</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="activity-table-body">
+          <!-- Wordt gevuld door JS -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+
+    {{footer}}
+
+<script src="/js/main.js"></script>
+</body>
+</html>
