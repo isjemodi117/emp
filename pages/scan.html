@@ -286,10 +286,10 @@
                 "Confidence: " + highest + " matches";
 
             // 🔹 KOPPEL AAN BACKEND API
-    app.get("/api/client/:szf_number", (req, res) => {
-  const szf_number = req.params.szf_number;
-  const sql = "SELECT id, name, blood_type, phone, emergency_contact FROM clients WHERE szf_number = ?";
-  db.query(sql, [szf_number], (err, results) => {
+    app.get("/api/client/:szf_code", (req, res) => {
+  const szf_code = req.params.szf_code;
+  const sql = "SELECT id, name, blood_type, phone, emergency_contact FROM clients WHERE szf_code = ?";
+  db.query(sql, [szf_code], (err, results) => {
     if (err) return res.status(500).json({ success: false, error: err.message });
     if (results.length > 0) {
       res.json({
@@ -402,27 +402,44 @@
                 const regex =
                     /[A-Z0-9]{2,9}/g;
 
+                // Na OCR en regex verwerking
                 const matches = text.match(regex);
 
-                if(matches){
+if (matches.length > 0) {
+    // Kies de waarde die het vaakst voorkomt
+    const bestValue = matches.sort((a, b) =>
+        matches.filter(v => v === a).length - matches.filter(v => v === b).length
+    ).pop();
 
-                    finalResult.innerHTML = `
-                        ID code:<br>
-                        ${matches[0]}
-                    `;
+    // Toon alleen het beste resultaat
+    finalResult.innerHTML = `ID Number: ${bestValue}`;
+    statusText.innerText = "Scanning complete";
 
-                    statusText.innerText =
-                        "Image scan completed";
-
-                }else{
-
-                    finalResult.innerText =
-                        "No valid card detected";
-
-                    statusText.innerText =
-                        "No match found";
-
-                }
+    // Koppel direct aan backend API
+    fetch(`http://localhost:3000/api/client/${bestValue}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log("API response:", data); // Debug
+            if (data.success) {
+                finalResult.innerHTML = `
+                    ID Code: ${bestValue}<br>
+                    Name: ${data.name}<br>
+                    Blood Type: ${data.blood_type}<br>
+                    Phone: ${data.phone}<br>
+                    Emergency: ${data.emergency_contact}
+                `;
+                statusText.innerText = "Match found in database";
+            } else {
+                statusText.innerText = "No match in database";
+            }
+        })
+        .catch(err => {
+            statusText.innerText = "Error connecting to server";
+            console.error(err);
+        });
+} else {
+    statusText.innerText = "No valid card detected";
+}
 
             };
 
