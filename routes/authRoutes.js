@@ -54,6 +54,13 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.post("/login", (req, res) => {
+    console.log('SIGNUP');
+
+    // insert database
+});
+
+
 router.get("/logout", (req, res) => {
     req.session.destroy(() => {
         res.redirect("/login");
