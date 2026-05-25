@@ -112,8 +112,8 @@ router.get("/patient-count", (req, res) => {
 // GET CLIENT BY SZF CODE
 router.get("/client/:szf_code", (req, res) => {
   const szf_code = req.params.szf_code;
-  const sql = "SELECT id, first_name, last_name, gender, birth_date, phone, address, emergency_contact, blood_type FROM clients WHERE szf_code = ?";
-  db.query(sql, [szf_code], (err, results) => {
+  const sql = "SELECT id, first_name, last_name, gender, birth_date, phone, address, emergency_contact, blood_type FROM clients WHERE szf_code LIKE ?";
+  db.query(sql, [szf_code + '%'], (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     if (results.length > 0) {
       res.json({
