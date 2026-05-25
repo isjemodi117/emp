@@ -18,7 +18,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   console.log(data);
 
   if (data.success) {
-    window.location.href = "/dashboard";
+    window.location.href = "/";
   } else {
     alert(data.message);
   }
