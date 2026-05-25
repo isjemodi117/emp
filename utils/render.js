@@ -44,7 +44,7 @@ function generateNavbar(user = { loggedIn: false, permissions: [] }) {
         <div class="user-dropdown">
 
             <div class="user-trigger">
-                <img src="/img/user.jpg" class="nav-user-img">
+                <img src="/img/user.png" class="nav-user-img">
                 <span class="nav-username">${user.email}</span>
             </div>
 

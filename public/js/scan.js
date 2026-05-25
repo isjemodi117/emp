@@ -169,6 +169,13 @@ function processResults() {
     statusText.innerText =
         "Confidence: " + highest + " matches";
 
+
+    const bestValue = matches[0];
+
+    setTimeout(() => {
+    window.location.href = `/patients/${bestValue}`;
+    }, 2000); // 2000ms = 2 seconds
+
 }
 
 // LOGS

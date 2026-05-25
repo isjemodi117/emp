@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { redirectIfLoggedIn } = require("../middlewares/authMiddleware");
+const db = require("../config/db");
 
 const render = require("../utils/render");
 const {
@@ -108,16 +109,6 @@ router.get("/terms", (req, res) => {
     );
 });
 
-// HISTORY
-router.get("/history", requireAdmin, (req, res) => {
-    res.send(
-        render("pages/history.html", {
-            css: `<link rel="stylesheet" href="css/history.css">`,
-            user: currentUser(req)
-        })
-    );
-});
-
 // DASHBOARD
 router.get("/dashboard", requireAdmin, (req, res) => {
     res.send(
@@ -127,10 +118,52 @@ router.get("/dashboard", requireAdmin, (req, res) => {
 });
 
 // PATIENTS
-router.get("/patients", requireAdmin, (req, res) => {
+// router.get("/patients", requireAdmin, (req, res) => {
+//     res.send(
+//         render("pages/patients.html", {
+//             css: `<link rel="stylesheet" href="css/patients.css">`,
+//             user: currentUser(req)
+//         })
+//     );
+// });
+
+router.get("/patients/:id", requireAdmin, async (req, res) => {
+    const patientId = req.params.id;
+    const sql = `SELECT * FROM clients WHERE id_kaart = ? LIMIT 1`;
+    db.query(sql, [patientId], (err, results) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Database error"
+            });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        const user = results[0];
+        console.log(user);
+
+        // SEND DATA TO HTML
+        res.send(
+            render("pages/patients.html", {
+                css: `<link rel="stylesheet" href="../css/patients.css">`,
+                user: currentUser(req),
+                patient: user
+            })
+        );
+    });
+});
+// HISTORY
+router.get("/history", requireAdmin, (req, res) => {
     res.send(
-        render("pages/patients.html", {
-            css: `<link rel="stylesheet" href="css/patients.css">`,
+        render("pages/history.html", {
+            css: `<link rel="stylesheet" href="css/history.css">`,
             user: currentUser(req)
         })
     );
