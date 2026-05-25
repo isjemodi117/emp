@@ -286,29 +286,22 @@
                 "Confidence: " + highest + " matches";
 
             // 🔹 KOPPEL AAN BACKEND API
-            fetch(`/api/client/${bestValue}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        finalResult.innerHTML = `
-                            ID Code: ${bestValue}<br>
-                            Name: ${data.name}<br>
-                            Blood Type: ${data.blood_type}<br>
-                            Phone: ${data.phone}<br>
-                            Emergency: ${data.emergency_contact}
-                        `;
-                        statusText.innerText = "Match found in database";
-                    } else {
-                        statusText.innerText = "No match in database";
-                    }
-                })
-                .catch(err => {
-                    statusText.innerText = "Error connecting to server";
-                    console.error(err);
-                });
-
-        }
-
+    app.get("/api/client/:szf_number", (req, res) => {
+  const szf_number = req.params.szf_number;
+  const sql = "SELECT id, name, blood_type, phone, emergency_contact FROM clients WHERE szf_number = ?";
+  db.query(sql, [szf_number], (err, results) => {
+    if (err) return res.status(500).json({ success: false, error: err.message });
+    if (results.length > 0) {
+      res.json({
+        success: true,
+        ...results[0]
+      });
+    } else {
+      res.status(404).json({ success: false, error: "Client not found" });
+    }
+  });
+});
+}
         // LOGS
 
         function addLog(text){
