@@ -7,6 +7,7 @@ const {
     requireAdmin,
     requireLogin,
     requirePermission,
+    verifyToken,
     currentUser
 } = require("../middlewares/authMiddleware");
 // HOME

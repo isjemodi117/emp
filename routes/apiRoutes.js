@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const db = require("../sql/config");
+const db = require("../config/db");
 
 // TEST DB
 router.get("/testdb", (req, res) => {
