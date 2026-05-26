@@ -8,6 +8,7 @@ function load(filePath) {
         "utf8"
     );
 }
+
 function generateNavbar(user = { loggedIn: false, permissions: [] }) {
     console.log("==== NAVBAR DEBUG ====");
     console.log("LoggedIn:", user.loggedIn);
@@ -64,6 +65,23 @@ function generateNavbar(user = { loggedIn: false, permissions: [] }) {
     return nav;
 }
 
+function flatten(obj, prefix = "") {
+    let result = {};
+
+    for (let key in obj) {
+        const value = obj[key];
+        const newKey = prefix ? `${prefix}_${key}` : key;
+
+        if (value && typeof value === "object" && !Array.isArray(value)) {
+            Object.assign(result, flatten(value, newKey));
+        } else {
+            result[newKey] = value;
+        }
+    }
+
+    return result;
+}
+
 function render(filePath, options = {}) {
 
     let html = load(filePath);
@@ -76,7 +94,7 @@ function render(filePath, options = {}) {
 
     html = html.replaceAll(
         "{{header}}",
-        generateNavbar(options.user)
+        generateNavbar(options.user || {})
     );
 
     html = html.replaceAll(
@@ -88,6 +106,19 @@ function render(filePath, options = {}) {
         "{{nav}}",
         load("partials/nav.html")
     );
+
+    // ✅ FIXED: correct flatten + replace logic
+    let flatOptions = flatten(options);
+
+    for (const key in flatOptions) {
+        let value = flatOptions[key];
+
+        if (Array.isArray(value)) {
+            value = value.join(", ");
+        }
+
+        html = html.replaceAll(`{{${key}}}`, value ?? "");
+    }
 
     return html;
 }

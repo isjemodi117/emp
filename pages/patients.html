@@ -11,7 +11,7 @@
     <div class="profile-top">
 
         <div class="profile-image-section">
-            <img src="/img/patient.jpg" alt="Patient" class="profile-image">
+            <img src="/img/patient.png" alt="Patient" class="profile-image">
 
             <div class="patient-status active">
                 Actief
@@ -25,7 +25,7 @@
 
         <div class="profile-main-info">
 
-            <h1>Alucha Kemble</h1>
+            <h1>{{name}}</h1>
 
             <p class="patient-role">
                 EHBO Patiënt Dossier
@@ -35,33 +35,28 @@
 
                 <div class="quick-card">
                     <span>Leeftijd</span>
-                    <strong>19 Jaar</strong>
+                    <strong>{{age}} Jaar</strong>
                 </div>
 
                 <div class="quick-card">
                     <span>Geslacht</span>
-                    <strong>Vrouw</strong>
+                    <strong>{{gender}}</strong>
                 </div>
 
                 <div class="quick-card">
                     <span>Bloedgroep</span>
-                    <strong>O+</strong>
-                </div>
-
-                <div class="quick-card">
-                    <span>SZF Nummer</span>
-                    <strong>SZF123456</strong>
+                    <strong>{{blood_type}}</strong>
                 </div>
 
                 <div class="quick-card">
                     <span>Verzekering</span>
                     <strong>SZF</strong>
+                    <span></span>
+                    <span>SZF Nummer</span>
+                    <strong>{{szf_code}}</strong>
                 </div>
 
-                <div class="quick-card emergency-alert">
-                    <span>Allergieën</span>
-                    <strong>Penicilline</strong>
-                </div>
+                {{alergie}}
 
             </div>
 
@@ -76,12 +71,12 @@
         <div class="detail-card">
             <h2>Persoonlijke Gegevens</h2>
 
-            <p><strong>Volledige naam:</strong> Alucha Kemble</p>
-            <p><strong>Geboortedatum:</strong> 26-12-2006</p>
-            <p><strong>Nationaliteit:</strong> Surinaams</p>
-            <p><strong>Adres:</strong> Paramaribo, Suriname</p>
-            <p><strong>Telefoon:</strong> +597 888888</p>
-            <p><strong>Email:</strong> alucha@email.com</p>
+            <p><strong>Volledige naam:</strong> {{full_name}}</p>
+            <p><strong>Geboortedatum:</strong> {{birthdate}}</p>
+            <p><strong>Nationaliteit:</strong> {{nationaliteit}}</p>
+            <p><strong>Adres:</strong> {{address}}</p>
+            <p><strong>Telefoon:</strong> +597 {{phone}}</p>
+            <p><strong>Email:</strong> {{email}}</p>
 
         </div>
 

@@ -52,6 +52,7 @@ INSERT INTO `allergies` (`id`, `name`) VALUES
 CREATE TABLE `clients` (
   `id` int(11) NOT NULL,
   `szf_code` varchar(30) NOT NULL,
+  `id_kaart` varchar(100) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `gender` varchar(20) NOT NULL,
@@ -67,17 +68,17 @@ CREATE TABLE `clients` (
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` (`id`, `szf_code`, `first_name`, `last_name`, `gender`, `birth_date`, `phone`, `address`, `emergency_contact`, `blood_type`, `created_at`) VALUES
-(1, 'SZF10001', 'Marvin', 'Latchmansing', 'Male', '1999-05-12', '7273468', 'Paramaribo', '7654832', 'O+', '2026-05-13 11:56:27'),
-(2, 'SZF10002', 'Ravi', 'Singh', 'Male', '2001-08-20', '8123456', 'Wanica', '8547691', 'A+', '2026-05-13 11:56:27'),
-(3, 'SZF10003', 'Priya', 'Ramdas', 'Female', '1998-11-02', '7456123', 'Commewijne', '7654321', 'B+', '2026-05-13 11:56:27'),
-(4, 'SZF10004', 'Anjali', 'Persad', 'Female', '1997-01-15', '7123456', 'Paramaribo', '7894561', 'AB+', '2026-05-13 11:56:27'),
-(5, 'SZF10005', 'Kevin', 'Bisoen', 'Male', '1988-03-22', '7456789', 'Wanica', '7654987', 'O-', '2026-05-13 11:56:27'),
-(6, 'SZF10006', 'Sara', 'Janki', 'Female', '2000-07-19', '7561234', 'Nickerie', '7234567', 'A-', '2026-05-13 11:56:27'),
-(7, 'SZF10007', 'Ryan', 'Algoe', 'Male', '1995-11-08', '8123457', 'Commewijne', '7543210', 'B-', '2026-05-13 11:56:27'),
-(8, 'SZF10008', 'Melissa', 'Baldewsing', 'Female', '1992-09-10', '8234567', 'Saramacca', '7999999', 'O+', '2026-05-13 11:56:27'),
-(9, 'SZF10009', 'John', 'Smith', 'Male', '1985-12-01', '8345678', 'Paramaribo', '7111111', 'A+', '2026-05-13 11:56:27'),
-(10, 'SZF10010', 'Lisa', 'Williams', 'Female', '1999-05-17', '8456789', 'Wanica', '7222222', 'AB-', '2026-05-13 11:56:27');
+INSERT INTO `clients` (`id`, `szf_code`, `id_kaart`, `first_name`, `last_name`, `gender`, `birth_date`, `phone`, `address`, `emergency_contact`, `blood_type`, `created_at`) VALUES
+(1, 'SZF10001', 'ID2026001', 'Marvin', 'Latchmansing', 'Male', '1999-05-12', '7273468', 'Paramaribo', '7654832', 'O+', '2026-05-13 11:56:27'),
+(2, 'SZF10002', 'ID2026002', 'Ravi', 'Singh', 'Male', '2001-08-20', '8123456', 'Wanica', '8547691', 'A+', '2026-05-13 11:56:27'),
+(3, 'SZF10003', 'ID2026003', 'Priya', 'Ramdas', 'Female', '1998-11-02', '7456123', 'Commewijne', '7654321', 'B+', '2026-05-13 11:56:27'),
+(4, 'SZF10004', 'ID2026004', 'Anjali', 'Persad', 'Female', '1997-01-15', '7123456', 'Paramaribo', '7894561', 'AB+', '2026-05-13 11:56:27'),
+(5, 'SZF10005', 'ID2026005', 'Kevin', 'Bisoen', 'Male', '1988-03-22', '7456789', 'Wanica', '7654987', 'O-', '2026-05-13 11:56:27'),
+(6, 'SZF10006', 'ID2026006', 'Sara', 'Janki', 'Female', '2000-07-19', '7561234', 'Nickerie', '7234567', 'A-', '2026-05-13 11:56:27'),
+(7, 'SZF10007', 'ID2026007', 'Ryan', 'Algoe', 'Male', '1995-11-08', '8123457', 'Commewijne', '7543210', 'B-', '2026-05-13 11:56:27'),
+(8, 'SZF10008', 'ID2026008', 'Melissa', 'Baldewsing', 'Female', '1992-09-10', '8234567', 'Saramacca', '7999999', 'O+', '2026-05-13 11:56:27'),
+(9, 'SZF10009', 'ID2026009', 'John', 'Smith', 'Male', '1985-12-01', '8345678', 'Paramaribo', '7111111', 'A+', '2026-05-13 11:56:27'),
+(10, 'SZF10010', 'ID2026010', 'Lisa', 'Williams', 'Female', '1999-05-17', '8456789', 'Wanica', '7222222', 'AB-', '2026-05-13 11:56:27');
 
 -- --------------------------------------------------------
 

@@ -336,7 +336,24 @@ section h2{
     background:#1e6b28;
     transform:translateY(-1px);
 }
-
+.low {
+        padding: 4px;
+    color: green !important;
+    font-size: 17px;
+    font-weight: bold;
+}
+.medium {
+        padding: 4px;
+    color: orange !important;
+    font-size: 17px;
+    font-weight: bold;
+}
+.high {
+        padding: 4px;
+    color: red !important;
+    font-size: 17px;
+    font-weight: bold;
+}
 /* Light footer */
 .footer{
     text-align:center;
@@ -350,3 +367,4 @@ section h2{
     .title-card h1{font-size:24px}
     #client-form input{max-width:100%}
 }
+

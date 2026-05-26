@@ -30,14 +30,11 @@ router.get("/testdb", (req, res) => {
 });
 
 // GET PATIENT
-router.get("/patient/:id", (req, res) => {
+router.get("/clients/:id", (req, res) => {
+    const patientId = req.params.id;
+    const sql = `SELECT * FROM clients WHERE id_kaart = ? LIMIT 1`;
 
-    const idNumber = req.params.id;
-
-    const sql =
-        "SELECT * FROM patients WHERE id_number = ?";
-
-    db.query(sql, [idNumber], (err, results) => {
+    db.query(sql, [patientId], (err, results) => {
 
         if (err) {
 

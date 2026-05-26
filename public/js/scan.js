@@ -16,24 +16,24 @@ let detectedValues = [];
 
 // START CAMERA
 
-async function initCamera() {
+async function initCamera(){
 
-    try {
+    try{
 
         const stream =
             await navigator.mediaDevices.getUserMedia({
 
-                video: {
-                    facingMode: "environment",
-                    width: { ideal: 1280 },
-                    height: { ideal: 720 }
-                }
+            video:{
+                facingMode:"environment",
+                width:{ ideal:1280 },
+                height:{ ideal:720 }
+            }
 
-            });
+        });
 
         video.srcObject = stream;
 
-    } catch (error) {
+    }catch(error){
 
         alert("Cannot access camera");
 
@@ -47,9 +47,9 @@ initCamera();
 
 // START SCAN
 
-async function startScanning() {
+async function startScanning(){
 
-    if (scanning) return;
+    if(scanning) return;
 
     scanning = true;
 
@@ -77,7 +77,7 @@ async function startScanning() {
 
 // STOP SCAN
 
-function stopScanning() {
+function stopScanning(){
 
     scanning = false;
 
@@ -89,9 +89,9 @@ function stopScanning() {
 
 // SCAN FRAME
 
-async function scanFrame() {
+async function scanFrame(){
 
-    if (!scanning) return;
+    if(!scanning) return;
 
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
@@ -99,7 +99,9 @@ async function scanFrame() {
     ctx.drawImage(video, 0, 0);
 
     const result =
-        await Tesseract.recognize(canvas, 'eng');
+        await Tesseract.recognize(canvas, 'eng', {
+            tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+        });
 
     const text = result.data.text;
 
@@ -108,11 +110,11 @@ async function scanFrame() {
     addLog(text);
 
     const regex =
-        /[A-Z]{1,3}[0-9]{3,8}/g;
+        /[A-Z0-9]{2,9}/g;
 
     const matches = text.match(regex);
 
-    if (matches) {
+    if(matches){
 
         matches.forEach(value => {
 
@@ -126,9 +128,9 @@ async function scanFrame() {
 
 // FINAL RESULT
 
-function processResults() {
+function processResults(){
 
-    if (detectedValues.length === 0) {
+    if(detectedValues.length === 0){
 
         finalResult.innerText =
             "No valid card detected";
@@ -149,9 +151,9 @@ function processResults() {
     let bestValue = null;
     let highest = 0;
 
-    for (let value in counts) {
+    for(let value in counts){
 
-        if (counts[value] > highest) {
+        if(counts[value] > highest){
 
             highest = counts[value];
 
@@ -162,25 +164,55 @@ function processResults() {
     }
 
     finalResult.innerHTML = `
-                ID Number:<br>
-                ${bestValue}
-            `;
+        ID code:<br>
+        ${bestValue}
+    `;
 
     statusText.innerText =
-        "Confidence: " + highest + " matches";
+        "Checking database...";
 
+    // CHECK DATABASE
+    fetch(`http://localhost:3000/api/clients/${bestValue}`)
+        .then(res => res.json())
+        .then(data => {
 
-    const bestValue = matches[0];
+            console.log("API response:", data);
 
-    setTimeout(() => {
-    window.location.href = `/patients/${bestValue}`;
-    }, 2000); // 2000ms = 2 seconds
+            if (data.success) {
+
+                statusText.innerText =
+                    "Patient found, redirecting...";
+
+                // WAIT 2 SECONDS
+                setTimeout(() => {
+
+                    window.location.href =
+                        `/patients/${bestValue}`;
+
+                }, 2000);
+
+            } else {
+
+                statusText.innerText =
+                    "No match in database";
+
+            }
+
+        })
+        .catch(err => {
+
+            statusText.innerText =
+                "Error connecting to server";
+
+            console.error(err);
+
+        });
 
 }
 
 // LOGS
 
-function addLog(text) {
+function addLog(text){
 
     const div = document.createElement("div");
 
@@ -194,7 +226,7 @@ function addLog(text) {
 
 // OPEN IMAGE UPLOAD
 
-function openUpload() {
+function openUpload(){
 
     imageUpload.click();
 
@@ -204,101 +236,141 @@ function openUpload() {
 
 imageUpload.addEventListener(
     "change",
-    async function (event) {
+    async function(event){
 
-        const file = event.target.files[0];
+    const file = event.target.files[0];
 
-        if (!file) return;
+    if(!file) return;
+
+    statusText.innerText =
+        "Loading image...";
+
+    const img = new Image();
+
+    img.onload = async function(){
+
+        previewImage.src = img.src;
+        previewImage.style.display = "block";
+
+        // AUTO ROTATE IF LANDSCAPE
+
+        if(img.width > img.height){
+
+            canvas.width = img.height;
+            canvas.height = img.width;
+
+            ctx.save();
+
+            ctx.translate(
+                canvas.width / 2,
+                canvas.height / 2
+            );
+
+            ctx.rotate(
+                90 * Math.PI / 180
+            );
+
+            ctx.drawImage(
+                img,
+                -img.width / 2,
+                -img.height / 2
+            );
+
+            ctx.restore();
+
+        }else{
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            ctx.drawImage(img, 0, 0);
+
+        }
 
         statusText.innerText =
-            "Loading image...";
+            "Scanning uploaded image...";
 
-        const img = new Image();
+        // OCR
 
-        img.onload = async function () {
+        const result =
+            await Tesseract.recognize(
+                canvas,
+                'eng',
+                {
+                    tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+                }
+            );
 
-            previewImage.src = img.src;
-            previewImage.style.display = "block";
+        const text = result.data.text;
 
-            // AUTO ROTATE IF LANDSCAPE
+        console.log(text);
 
-            if (img.width > img.height) {
+        addLog(text);
 
-                canvas.width = img.height;
-                canvas.height = img.width;
+        const regex =
+            /[A-Z0-9]{2,9}/g;
 
-                ctx.save();
+        const matches = text.match(regex);
 
-                ctx.translate(
-                    canvas.width / 2,
-                    canvas.height / 2
-                );
+        if (matches && matches.length > 0) {
 
-                ctx.rotate(
-                    90 * Math.PI / 180
-                );
+            const bestValue = matches.sort((a, b) =>
+                matches.filter(v => v === a).length -
+                matches.filter(v => v === b).length
+            ).pop();
 
-                ctx.drawImage(
-                    img,
-                    -img.width / 2,
-                    -img.height / 2
-                );
-
-                ctx.restore();
-
-            } else {
-
-                canvas.width = img.width;
-                canvas.height = img.height;
-
-                ctx.drawImage(img, 0, 0);
-
-            }
+            finalResult.innerHTML =
+                `ID Number: ${bestValue}`;
 
             statusText.innerText =
-                "Scanning uploaded image...";
+                "Checking database...";
 
-            // OCR
+            // CHECK DATABASE
+            fetch(`http://localhost:3000/api/clients/${bestValue}`)
+                .then(res => res.json())
+                .then(data => {
 
-            const result =
-                await Tesseract.recognize(
-                    canvas,
-                    'eng'
-                );
+                    console.log("API response:", data);
 
-            const text = result.data.text;
+                    if (data.success) {
 
-            console.log(text);
+                        statusText.innerText =
+                            "Patient found, redirecting...";
 
-            addLog(text);
+                        // WAIT 2 SECONDS
+                        setTimeout(() => {
 
-            const regex =
-                /[A-Z]{1,3}[0-9]{3,8}/g;
+                            window.location.href =
+                                `/patients/${bestValue}`;
 
-            const matches = text.match(regex);
+                        }, 2000);
 
-            if (matches) {
+                    } else {
 
-                finalResult.innerHTML = `
-                        ID Number:<br>
-                        ${matches[0]}
-                    `;
+                        statusText.innerText =
+                            "No match in database";
 
-                statusText.innerText =
-                    "Image scan completed";
+                    }
 
-            } else {
+                })
+                .catch(err => {
 
-                finalResult.innerText =
-                    "No valid card detected";
+                    statusText.innerText =
+                        "Error connecting to server";
 
-                statusText.innerText =
-                    "No match found";
+                    console.error(err);
 
-            }
+                });
 
-        };
+        } else {
 
-        img.src = URL.createObjectURL(file);
+            statusText.innerText =
+                "No valid card detected";
 
-    });
+        }
+
+    };
+
+    img.src = URL.createObjectURL(file);
+
+});

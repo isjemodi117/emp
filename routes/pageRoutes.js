@@ -11,6 +11,27 @@ const {
     verifyToken,
     currentUser
 } = require("../middlewares/authMiddleware");
+
+
+function calculateAge(birthDate) {
+    const today = new Date();
+    const birth = new Date(birthDate);
+
+    let age = today.getFullYear() - birth.getFullYear();
+
+    const monthDiff = today.getMonth() - birth.getMonth();
+    const dayDiff = today.getDate() - birth.getDate();
+
+    // If birthday hasn't happened yet this year, subtract 1
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        age--;
+    }
+
+    return age;
+}
+
+
+
 // HOME
 
 router.get("/", (req, res) => {
@@ -127,17 +148,22 @@ router.get("/dashboard", requireAdmin, (req, res) => {
 //     );
 // });
 
-router.get("/patients/:id", requireAdmin, async (req, res) => {
-    const patientId = req.params.id;
-    const sql = `SELECT * FROM clients WHERE id_kaart = ? LIMIT 1`;
-    db.query(sql, [patientId], (err, results) => {
+function allergie(id, callback){
+    return db.promise().query(`
+        SELECT a.name, ca.severity, ca.notes FROM client_allergies ca
+        LEFT JOIN allergies a
+        ON ca.allergy_id = a.id WHERE ca.client_id = ? `, 
+    [id]).then(([rows]) => rows);
+}
 
-        if (err) {
-            return res.status(500).json({
-                success: false,
-                message: "Database error"
-            });
-        }
+router.get("/patients/:id", requireAdmin, async (req, res) => {
+    try {
+        const patientId = req.params.id;
+
+        const [results] = await db.promise().query(
+            `SELECT * FROM clients WHERE id_kaart = ? LIMIT 1`,
+            [patientId]
+        );
 
         if (results.length === 0) {
             return res.status(404).json({
@@ -146,19 +172,48 @@ router.get("/patients/:id", requireAdmin, async (req, res) => {
             });
         }
 
-        const user = results[0];
-        console.log(user);
+        const patient = results[0];
 
-        // SEND DATA TO HTML
+        const allergies = await allergie(patient.id);
+
+        let allergiesHtml = allergies.map(a => `
+            <div class="quick-card emergency-alert">
+                <span>Allergieën</span>
+                <div class="alergy">
+                    <strong>${a.name}</strong>
+                    <p class="${(a.severity || "").toLowerCase()}">${a.severity}</p>
+                    <p>Notes: ${a.notes}</p>
+                </div>
+            </div>
+        `).join("");
+
         res.send(
             render("pages/patients.html", {
                 css: `<link rel="stylesheet" href="../css/patients.css">`,
                 user: currentUser(req),
-                patient: user
+                name: `${patient.first_name} ${patient.last_name}`,
+                full_name: `${patient.first_name} ${patient.last_name}`,
+                gender: patient.gender,
+                blood_type: patient.blood_type,
+                id_kaart: patient.id_kaart,
+                szf_code: patient.szf_code,
+                age: calculateAge(patient.birth_date),
+                birth_date: calculateAge(patient.birth_date),
+                alergie: allergiesHtml,
+                address: patient.address,
+                phone: patient.phone,
+                email: '',
+                nationaliteit: '',
             })
         );
-    });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
 });
+
+
 // HISTORY
 router.get("/history", requireAdmin, (req, res) => {
     res.send(
