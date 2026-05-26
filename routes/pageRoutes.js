@@ -215,13 +215,62 @@ router.get("/patients/:id", requireAdmin, async (req, res) => {
 
 
 // HISTORY
-router.get("/history", requireAdmin, (req, res) => {
-    res.send(
-        render("pages/history.html", {
-            css: `<link rel="stylesheet" href="css/history.css">`,
-            user: currentUser(req)
-        })
-    );
+router.get("/history/:id", requireAdmin, async (req, res) => {
+
+    try {
+        const patientId = req.params.id;
+
+        const [results] = await db.promise().query(
+            `SELECT * FROM clients WHERE id_kaart = ? LIMIT 1`,
+            [patientId]
+        );
+
+        if (results.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        const patient = results[0];
+
+        const allergies = await allergie(patient.id);
+
+        let allergiesHtml = allergies.map(a => `
+            <div class="profile-item">
+                <span>Allergieën</span>
+                <div class="alergy">
+                    <strong>${a.name}</strong>
+                    <p class="${(a.severity || "").toLowerCase()}">${a.severity}</p>
+                    <p>Notes: ${a.notes}</p>
+                </div>
+            </div>
+        `).join("");
+        
+        res.send(
+            render("pages/history.html", {
+                css: `<link rel="stylesheet" href="../css/history.css">`,
+                user: currentUser(req),
+                name: `${patient.first_name} ${patient.last_name}`,
+                full_name: `${patient.first_name} ${patient.last_name}`,
+                gender: patient.gender,
+                blood_type: patient.blood_type,
+                id_kaart: patient.id_kaart,
+                szf_code: patient.szf_code,
+                age: calculateAge(patient.birth_date),
+                birth_date: calculateAge(patient.birth_date),
+                alergie: allergiesHtml,
+                address: patient.address,
+                phone: patient.phone,
+                email: '',
+                nationaliteit: '',
+            })
+        );
+    
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
 });
 
 // SCAN
