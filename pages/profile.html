@@ -13,15 +13,9 @@
         <img src="/img/user.jpg" alt="My Photo" class="my-profile-img">
 
         <div class="my-profile-info">
-
-            <h1>Marvin Latchmansing</h1>
-
-            <p class="role">ICT Functioneel Beheerder</p>
-
-            <div class="status active">
-                Online / Actief
-            </div>
-
+            <h1 id="profile-name">...</h1>
+            <p class="role" id="profile-role">...</p>
+            <div class="status active">Online / Actief</div>
         </div>
 
     </div>
@@ -32,75 +26,27 @@
         <!-- PERSONAL INFO -->
         <div class="card">
             <h2>Persoonlijke Gegevens</h2>
-
-            <p><strong>Naam:</strong> Marvin Latchmansing</p>
-            <p><strong>Email:</strong> marvin@email.com</p>
-            <p><strong>Telefoon:</strong> +597 7273468</p>
-            <p><strong>Adres:</strong> Paramaribo, Suriname</p>
+            <p><strong>Naam:</strong> <span id="profile-name-detail">-</span></p>
+            <p><strong>Email:</strong> <span id="profile-email">-</span></p>
+            <p><strong>Telefoon:</strong> <span id="profile-phone">-</span></p>
+            <p><strong>Adres:</strong> <span id="profile-address">-</span></p>
+            <p><strong>Geboortedatum:</strong> <span id="profile-dob">-</span></p>
+            <p><strong>Geslacht:</strong> <span id="profile-gender">-</span></p>
         </div>
 
-        <!-- WORK INFO -->
+        <!-- MEDICAL INFO -->
         <div class="card">
-            <h2>Werk Informatie</h2>
-
-            <p><strong>Rol:</strong> Admin / ICT</p>
-            <p><strong>Afdeling:</strong> IT & Systemen</p>
-            <p><strong>Werknemer ID:</strong> EMP-001</p>
-            <p><strong>Status:</strong> Actief</p>
+            <h2>Medische Informatie</h2>
+            <p><strong>Bloedgroep:</strong> <span id="profile-blood-type">-</span></p>
         </div>
 
         <!-- SECURITY / ACCESS -->
         <div class="card">
             <h2>Toegang & Rollen</h2>
-
             <div class="tags">
-                <span class="tag">admin</span>
-                <span class="tag">doctor</span>
-                <span class="tag">system</span>
+                <span class="tag" id="profile-role-tag">-</span>
             </div>
-
-            <p class="note">
-                Deze rollen bepalen welke pagina’s je kunt openen.
-            </p>
-        </div>
-
-        <!-- MEDICATION (IF ANY) -->
-        <div class="card">
-
-            <h2>Mijn Medicatie</h2>
-
-            <div class="medication-list">
-
-                <div class="med-item">
-                    <h4>Ibuprofen 400mg</h4>
-                    <p>Gebruik: Indien nodig tegen pijn</p>
-                </div>
-
-                <div class="med-item">
-                    <h4>Vitamine D</h4>
-                    <p>Gebruik: 1x per dag</p>
-                </div>
-
-            </div>
-
-            <p class="note">
-                Alleen zichtbaar voor jezelf (privacy protected data).
-            </p>
-
-        </div>
-
-        <!-- ACTIVITY -->
-        <div class="card">
-
-            <h2>Recente Activiteit</h2>
-
-            <ul class="activity">
-                <li>✔ Ingelogd om 08:12</li>
-                <li>✔ Patient database bekeken</li>
-                <li>✔ Visit record aangepast</li>
-                <li>✔ Logout test uitgevoerd</li>
-            </ul>
-
+            <p class="note">Deze rollen bepalen welke pagina's je kunt openen.</p>
         </div>
 
     </div>
@@ -109,5 +55,6 @@
 
 {{footer}}
 
+<script src="/js/profile.js"></script>
 </body>
 </html>

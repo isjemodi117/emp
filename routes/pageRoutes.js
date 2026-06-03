@@ -298,7 +298,7 @@ router.get("/visits", requireAdmin, (req, res) => {
 });
 
 // PROFILE
-router.get("/profile", requireAdmin, (req, res) => {
+router.get("/profile", requireLogin, (req, res) => {
     res.send(
         render("pages/profile.html", {
             css: `<link rel="stylesheet" href="css/profile.css">`,

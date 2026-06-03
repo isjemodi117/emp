@@ -130,4 +130,30 @@ router.get("/client/:szf_code", (req, res) => {
   });
 });
 
+// CURRENT LOGGED IN USER
+router.get("/me", (req, res) => {
+
+    if (!req.session || !req.session.user) {
+        return res.status(401).json({ success: false, message: "Niet ingelogd" });
+    }
+
+    const userId = req.session.user.id;
+
+    const sql = `
+        SELECT u.id, u.email, u.role,
+               c.first_name, c.last_name, c.phone, c.address, c.birth_date, c.blood_type, c.gender
+        FROM users u
+        LEFT JOIN clients c ON u.client_id = c.id
+        WHERE u.id = ?
+    `;
+
+    db.query(sql, [userId], (err, results) => {
+        if (err) return res.status(500).json({ error: err.message });
+        if (results.length === 0) return res.status(404).json({ success: false, message: "Gebruiker niet gevonden" });
+
+        res.json({ success: true, user: results[0] });
+    });
+
+});
+
 module.exports = router;

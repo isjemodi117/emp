@@ -1,29 +1,28 @@
-document.querySelector("form").addEventListener("submit", async (e) => {
+document.querySelector("#signupForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const email = document.querySelector("#email").value;
+  const name     = document.querySelector("#name").value;
+  const email    = document.querySelector("#email").value;
   const password = document.querySelector("#password").value;
+  const dob      = document.querySelector("#dob").value;
+  const phone    = document.querySelector("#phone").value;
+  const gender   = document.querySelector("#gender").value;
 
   try {
-    const res = await fetch("/auth/login", {
+    const res = await fetch("/auth/signup", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email, password })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password, dob, phone, gender })
     });
 
     const data = await res.json();
 
     if (data.success) {
-      console.log("Login success:", data.user);
-
-      // redirect manually (optional)
-      window.location.href = "/";
+      window.location.href = "/profile";
     } else {
-      console.log("Login failed:", data.message);
+      alert(data.message || "Aanmelden mislukt. Probeer opnieuw.");
     }
   } catch (err) {
-    console.error("Error:", err);
+    console.error("Signup error:", err);
   }
 });

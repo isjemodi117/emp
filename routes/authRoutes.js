@@ -69,6 +69,43 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.post("/signup", (req, res) => {
+
+    const { name, email, password, dob, phone, gender } = req.body;
+
+    const nameParts = name.trim().split(" ");
+    const first_name = nameParts[0];
+    const last_name = nameParts.slice(1).join(" ") || "-";
+    const szf_code = "SZF-" + Date.now().toString().slice(-8);
+
+    const sqlClient = `
+        INSERT INTO clients (szf_code, first_name, last_name, gender, birth_date, phone)
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    db.query(sqlClient, [szf_code, first_name, last_name, gender || "Onbekend", dob, phone || null], (err, result) => {
+        if (err) return res.status(500).json({ success: false, message: err.message });
+
+        const client_id = result.insertId;
+
+        const sqlUser = "INSERT INTO users (client_id, email, password, role) VALUES (?, ?, ?, 'client')";
+
+        db.query(sqlUser, [client_id, email, password], (err, userResult) => {
+            if (err) return res.status(500).json({ success: false, message: err.message });
+
+            req.session.user = {
+                id: userResult.insertId,
+                email,
+                role: "client",
+                permissions: ["profile"]
+            };
+
+            res.json({ success: true });
+        });
+    });
+
+});
+
 router.get("/logout", (req, res) => {
     req.session.destroy(() => {
         res.redirect("/login");
