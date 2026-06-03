@@ -8,6 +8,8 @@ const session = require("express-session");
 const app = express();
 
 // ROUTES
+const adminRoutes = require("./routes/adminRoutes");
+const cmsRoutes = require("./routes/cmsRoutes");
 const apiRoutes = require("./routes/apiRoutes");
 const pageRoutes = require("./routes/pageRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -34,6 +36,8 @@ app.use(session({
 app.use("/", pageRoutes);
 app.use("/auth", authRoutes);
 app.use("/api", apiRoutes);
+// app.use("/admin", adminRoutes);
+app.use("/cms", cmsRoutes);
 
 
 // 404
