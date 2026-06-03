@@ -198,12 +198,16 @@ router.get("/patients/:id", requireAdmin, async (req, res) => {
                 id_kaart: patient.id_kaart,
                 szf_code: patient.szf_code,
                 age: calculateAge(patient.birth_date),
-                birth_date: calculateAge(patient.birth_date),
+                birth_date: new Date(patient.birth_date).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                }),
                 alergie: allergiesHtml,
                 address: patient.address,
                 phone: patient.phone,
-                email: '',
-                nationaliteit: '',
+                email: 'don@gmail.com',
+                nationaliteit: 'Surinaams',
             })
         );
 
